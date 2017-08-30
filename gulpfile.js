@@ -118,7 +118,7 @@ gulp.task('listingApp', () => {
 		     './src/app/config.js',
 		     './src/app/controllers/ListingCtrl.js'
 		    ])
-	.pipe(concat('index_app_simple.js'))
+	.pipe(concat('index.js'))
         .pipe(devel ? util.noop() : uglify({ mangle: false}))
 	.pipe(gulp.dest(config.buildDir));
 });
@@ -129,7 +129,7 @@ gulp.task('archiveApp', () => {
     return gulp.src(['./src/app/archive.js',
 		     './src/app/config.js',
 		     './src/app/controllers/ArchiveCtl.js'])
-	.pipe(concat('archive_app_simple.js'))
+	.pipe(concat('archive.js'))
         .pipe(devel ? util.noop() : uglify({ mangle: false}))
 	.pipe(gulp.dest(config.buildDir));
 });
@@ -158,7 +158,7 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
     let listPage = gulp.src(`${config.buildDir}/index.html`)
 	.pipe(gulp.dest(config.outDir));
 
-    let listApp = gulp.src(`${config.buildDir}/index_app_simple.js`)
+    let listApp = gulp.src(`${config.buildDir}/index.js`)
 	.pipe(gulp.dest(config.outDir + '/static/'));
 
     let vendor_js = gulp.src(`${config.buildDir}/vendor.js`)
@@ -167,7 +167,7 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
     let archivePage = gulp.src(`${config.buildDir}/archive.html`)
 	.pipe(gulp.dest(config.outDir));
 
-    let archiveApp = gulp.src(`${config.buildDir}/archive_app_simple.js`)
+    let archiveApp = gulp.src(`${config.buildDir}/archive.js`)
 	.pipe(gulp.dest(config.outDir + '/static/'));
 
     let auctionPage = gulp.src(`${config.buildDir}/${name}.html`)
