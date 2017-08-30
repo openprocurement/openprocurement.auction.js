@@ -1,6 +1,6 @@
 {
   "name": "auction",
-  "version": "0.0.1",
+  "version": "1.0.0a1+eauctions",
   "description": "Angular frontend for Openprocurement Auction",
   "directories": {
     "test": "tests"
