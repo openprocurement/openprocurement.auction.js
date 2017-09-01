@@ -9,6 +9,7 @@ angular.module('auction').controller('AuctionController',[
     var sse_url = window.location.href.replace(window.location.search, '');
     var evtSrc = '';
     var response_timeout = '';
+    $scope.here = sse_url;  
 
     if (AuctionUtils.inIframe() && 'localhost'!= location.hostname) {
       $log.error('Starts in iframe');
