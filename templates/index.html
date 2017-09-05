@@ -8,14 +8,14 @@
     <div
       class="list-group-item text-center"
       ng-repeat="auction in auctions">
-      <!--TODO correct procurementMethodType -->
-      <a ng-if="auction.doc.procurementMethodType.indexOf('newDgf') >= 0" href="/insider-auctions/{{ auction.doc._id }}">
+
+      <a ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0" href="/insider-auctions/{{ auction.doc._id }}">
         <h4 class="list-group-item-heading">
           Аукціон {{ auction.doc.auctionID }}
         </h4>
       </a>
-      <!--TODO correct procurementMethodType -->
-      <a ng-if="auction.doc.procurementMethodType.indexOf('newDgf') === -1" href="/auctions/{{ auction.doc._id }}">
+
+      <a ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1" href="/auctions/{{ auction.doc._id }}">
         <h4 class="list-group-item-heading">
           Аукціон {{ auction.doc.auctionID }}
         </h4>
