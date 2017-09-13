@@ -30,9 +30,19 @@ angular.module('auction').controller('AuctionController',[
     $rootScope.default_http_error_timeout = 500;
     $rootScope.http_error_timeout = $rootScope.default_http_error_timeout;
     $rootScope.browser_client_id = AuctionUtils.generateUUID();
-    $rootScope.$watch(function() {return $cookies.logglytrackingsession; }, function(newValue, oldValue) {
+    $rootScope.$watch(function() {return $cookies.logglytrackingsession; },
+    function(newValue, oldValue) {
       $rootScope.browser_session_id = $cookies.logglytrackingsession;
     });
+    window.onunload = function () {
+      $log.info("Close window")
+      if($rootScope.changes){
+        $rootScope.changes.cancel()
+      }
+      if($rootScope.evtSrc){
+        $rootScope.evtSrc.close();
+      }
+    }
     $log.info({
       message: "Start session",
       browser_client_id: $rootScope.browser_client_id,
