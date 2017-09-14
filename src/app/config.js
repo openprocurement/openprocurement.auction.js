@@ -1,6 +1,7 @@
 angular.module('auction').config([
   '$logProvider', '$httpProvider', 'AuctionConfig', 'growlProvider', 'GTMLoggerProvider',
   function ($logProvider, $httpProvider, AuctionConfig, growlProvider, GTMLoggerProvider) {
+  $qProvider.errorOnUnhandledRejections(false);
   $httpProvider.defaults.withCredentials = true;
   GTMLoggerProvider.level('INFO').includeTimestamp( true );
   $logProvider.debugEnabled(AuctionConfig.debug); // default is true
