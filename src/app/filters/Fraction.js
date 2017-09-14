@@ -1,13 +1,13 @@
 angular.module('auction').filter('fraction', [function () {
-  return function(val, coeficient) {
-    var format_function = function(val) {
+  return function (val, coeficient) {
+    var format_function = function (val) {
       return math.format(Number(val), {
         notation: 'fixed',
         precision: 2
       }).replace(/(\d)(?=(\d{3})+\.)/g, '$1 ').replace(/\./g, ",");
     };
     if (!angular.isUndefined(val)) {
-      if (angular.isNumber(val)){
+      if (angular.isNumber(val)) {
         return format_function(val);
       }
       if (coeficient) {
@@ -21,7 +21,7 @@ angular.module('auction').filter('fraction', [function () {
 
 
 angular.module('auction').filter('fraction_string', [function () {
-  return function(val) {
+  return function (val) {
     return math.fraction(val).toString();
   };
 }]);

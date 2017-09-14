@@ -1,6 +1,6 @@
 angular.module('auction').factory('AuctionUtils', [
-    '$filter', '$timeout', '$log', '$window',
-    function ($filter, $timeout, $log, $window) {
+  '$filter', '$timeout', '$log', '$window',
+  function ($filter, $timeout, $log, $window) {
     // Format msg for timer
     'use strict';
 
@@ -26,13 +26,13 @@ angular.module('auction').factory('AuctionUtils', [
       }
       if (auction.current_stage === -1) {
         var until_seconds = (new Date(auction.stages[0].start) - current_time) / 1000;
-        if (until_seconds > -120){
+        if (until_seconds > -120) {
           return {
             'countdown': (until_seconds) + Math.random(),
             'start_time': false,
             'msg': 'until the auction starts'
           };
-        }else{
+        } else {
           return {
             'countdown': false,
             'start_time': true,
@@ -41,9 +41,10 @@ angular.module('auction').factory('AuctionUtils', [
         }
 
       }
+      var client_time, ends_time;
       if ((auction.stages[auction.current_stage].type || '') == "pre_announcement") {
-        var client_time = new Date();
-        var ends_time = new Date(auction.stages[auction.current_stage].start);
+        client_time = new Date();
+        ends_time = new Date(auction.stages[auction.current_stage].start);
         if (client_time < ends_time) {
           ends_time = client_time;
         }
@@ -55,8 +56,8 @@ angular.module('auction').factory('AuctionUtils', [
         };
       }
       if ((auction.stages[auction.current_stage].type || '') == "announcement") {
-        var client_time = new Date();
-        var ends_time = new Date(auction.stages[auction.current_stage - 1].start);
+        client_time = new Date();
+        ends_time = new Date(auction.stages[auction.current_stage - 1].start);
         if (client_time < ends_time) {
           ends_time = client_time;
         }
@@ -123,12 +124,12 @@ angular.module('auction').factory('AuctionUtils', [
       }
       if (auction.current_stage === -1) {
         var until_seconds = (new Date(auction.stages[0].start) - current_time) / 1000;
-        if (until_seconds > -120){
+        if (until_seconds > -120) {
           return {
             'countdown_seconds': until_seconds + Math.random(),
             'rounds_seconds': until_seconds,
           };
-        }else{
+        } else {
           return {
             'countdown_seconds': false,
             'rounds_seconds': 0,
@@ -143,7 +144,7 @@ angular.module('auction').factory('AuctionUtils', [
     }
     // characters 100 true
     function prepare_title_ending_data(auction, lang) {
-      var ending = auction.tenderID + " - " + $filter('characters')((auction['title_' + lang] || auction['title'] || auction['title_en'] || auction['title_ru'] || ""), 50, true);
+      var ending = auction.auctionID + " - " + $filter('characters')((auction['title_' + lang] || auction['title'] || auction['title_en'] || auction['title_ru'] || ""), 50, true);
       ending += " - ";
       ending += $filter('characters')(auction.procuringEntity['name_' + lang] || auction.procuringEntity['name'] || auction.procuringEntity['name_en'] || auction.procuringEntity['name_ru'] || "", 50, true);
       return ending;
@@ -208,7 +209,7 @@ angular.module('auction').factory('AuctionUtils', [
     }
     // Scroll functionality
     function scroll_to_stage(auction_doc, Rounds) {
-      $timeout(function() {
+      $timeout(function () {
         var current_round = 0;
         for (var index in Rounds) {
           if ((auction_doc.current_stage >= Rounds[index]) && (auction_doc.current_stage <= (Rounds[index] + auction_doc.initial_bids.length))) {
@@ -216,32 +217,33 @@ angular.module('auction').factory('AuctionUtils', [
             break;
           }
         }
+        var scroll_tag_id, round_elem;
         if (auction_doc.current_stage >= 0) {
           if (current_round) {
-            var scroll_tag_id = 'round-header-' + current_round.toString();
-            var round_elem = document.getElementById(scroll_tag_id);
+            scroll_tag_id = 'round-header-' + current_round.toString();
+            round_elem = document.getElementById(scroll_tag_id);
           } else {
-            var scroll_tag_id = 'results-header'
-            var round_elem = document.getElementById(scroll_tag_id);
-          };
+            scroll_tag_id = 'results-header';
+            round_elem = document.getElementById(scroll_tag_id);
+          }
         }
         if (round_elem) {
           var round_elem_dimensions = round_elem.getBoundingClientRect();
           if (($window.innerHeight - 169) < round_elem_dimensions.height) {
             if (current_round) {
-              var scroll_tag_id = 'stage-' + auction_doc.current_stage.toString();
+              scroll_tag_id = 'stage-' + auction_doc.current_stage.toString();
             } else {
-              var scroll_tag_id = 'results-header';
+              scroll_tag_id = 'results-header';
             }
             var stage_elem = document.getElementById(scroll_tag_id);
-            if (stage_elem){
+            if (stage_elem) {
               stage_elem.scrollIntoView(true);
               var stage_elem_dimensions = stage_elem.getBoundingClientRect();
               $window.scrollBy(0, stage_elem_dimensions.top - 96);
             }
           } else {
             round_elem.scrollIntoView(true);
-            var round_elem_dimensions = document.getElementById(scroll_tag_id).getBoundingClientRect()
+            round_elem_dimensions = document.getElementById(scroll_tag_id).getBoundingClientRect();
             $window.scrollBy(0, round_elem_dimensions.top - 96);
           }
         }
@@ -249,25 +251,25 @@ angular.module('auction').factory('AuctionUtils', [
     }
 
     function detectIE() {
-        var ua = window.navigator.userAgent;
+      var ua = window.navigator.userAgent;
 
-        var msie = ua.indexOf('MSIE ');
-        if (msie > 0) {
-            return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-        }
+      var msie = ua.indexOf('MSIE ');
+      if (msie > 0) {
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+      }
 
-        var trident = ua.indexOf('Trident/');
-        if (trident > 0) {
-            var rv = ua.indexOf('rv:');
-            return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-        }
+      var trident = ua.indexOf('Trident/');
+      if (trident > 0) {
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+      }
 
-        var edge = ua.indexOf('Edge/');
-        if (edge > 0) {
-           return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-        }
+      var edge = ua.indexOf('Edge/');
+      if (edge > 0) {
+        return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+      }
 
-        return false;
+      return false;
     }
 
     function parseQueryString(str) {
@@ -281,7 +283,7 @@ angular.module('auction').factory('AuctionUtils', [
         return {};
       }
 
-      return str.trim().split('&').reduce(function(ret, param) {
+      return str.trim().split('&').reduce(function (ret, param) {
         var parts = param.replace(/\+/g, ' ').split('=');
         var key = parts[0];
         var val = parts[1];
@@ -299,10 +301,10 @@ angular.module('auction').factory('AuctionUtils', [
     }
 
     function stringifyQueryString(obj) {
-      return obj ? Object.keys(obj).map(function(key) {
+      return obj ? Object.keys(obj).map(function (key) {
         var val = obj[key];
         if (Array.isArray(val)) {
-          return val.map(function(val2) {
+          return val.map(function (val2) {
             return encodeURIComponent(key) + '=' + encodeURIComponent(val2);
           }).join('&');
         }
@@ -328,32 +330,32 @@ angular.module('auction').factory('AuctionUtils', [
     }
 
     function generateUUID() {
-        var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (d + Math.random()*16)%16 | 0;
-            d = Math.floor(d/16);
-            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-        });
-        return uuid;
-    };
+      var d = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      return uuid;
+    }
 
-    function UnsupportedBrowser(){
-        var parser = new UAParser();
-        var Browser = parser.getBrowser();
-        if (Browser.name === "Opera"){
-          if (parseFloat(Browser.version) < 12.10 ){
-              return true
-            }
+    function UnsupportedBrowser() {
+      var parser = new UAParser();
+      var Browser = parser.getBrowser();
+      if (Browser.name === "Opera") {
+        if (parseFloat(Browser.version) < 12.10) {
+          return true;
         }
-        if (Browser.name === "IE"){
-          if (parseFloat(Browser.major) < 10 ){
-              return true
-            }
+      }
+      if (Browser.name === "IE") {
+        if (parseFloat(Browser.major) < 10) {
+          return true;
         }
-        if (Browser.name === "Opera Mini"){
-           return true
-        }
-        return false;
+      }
+      if (Browser.name === "Opera Mini") {
+        return true;
+      }
+      return false;
     }
 
     return {
@@ -373,4 +375,5 @@ angular.module('auction').factory('AuctionUtils', [
       'detectIE': detectIE,
       'UnsupportedBrowser': UnsupportedBrowser
     };
-}]);
+  }
+]);

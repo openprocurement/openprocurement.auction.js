@@ -1,4 +1,4 @@
-angular.module('auction').factory('$aside', ['$modal', function ($modal) {
+angular.module('auction').factory('$aside', ['$modal', function($modal) {
   var asideFactory = {
     open: function(config) {
       var options = angular.extend({}, config);

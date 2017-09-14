@@ -1,8 +1,9 @@
-const requires = [
-    'angular-growl',
-    'GTMLogger'
+requires = [
+  'angular-growl',
+  'GTMLogger'
 ];
 
 angular.module('auction', requires).constant(
-    'AuctionConfig', { db_url: (location.protocol + '//' + location.host + '/auctions/' ) || "" 
-})
+  'AuctionConfig', {
+    db_url: (location.protocol + '//' + location.host + '/auctions/') || ""
+  });
