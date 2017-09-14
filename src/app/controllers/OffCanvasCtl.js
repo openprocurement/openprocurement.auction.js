@@ -1,13 +1,13 @@
 angular.module('auction').controller('OffCanvasController', [
-    '$scope', '$modalInstance',
+    '$rootScope', '$modalInstance',
     function ($scope, $modalInstance) {
-  $scope.allert = function() {
-    console.log($scope);
+  $rootScope.allert = function() {
+    console.log($rootScope);
   };
-  $scope.ok = function() {
-    $modalInstance.close($scope.selected.item);
+  $rootScope.ok = function() {
+    $modalInstance.close($rootScope.selected.item);
   };
-  $scope.cancel = function() {
+  $rootScope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
 }]);
