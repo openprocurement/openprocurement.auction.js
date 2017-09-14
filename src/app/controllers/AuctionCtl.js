@@ -122,11 +122,11 @@ angular.module('auction').controller('AuctionController',[
     $rootScope.$on('timer-tick', function(event) {
       if (($rootScope.auction_doc) && (event.targetScope.timerid == 1)) {
         if (((($rootScope.info_timer || {}).msg || "") === 'until your turn') && (event.targetScope.minutes == 1) && (event.targetScope.seconds == 50)) {
-          $http.post(sse_url + '/check_authorization').then(function(data) {
+          $http.post('./check_authorization').then(function(data) {
             $log.info({
               message: "Authorization checked"
             });
-          }).error(function(data) {
+          }, function(data) {
             $log.error({
               message: "Error while check_authorization"
             });
@@ -162,26 +162,31 @@ angular.module('auction').controller('AuctionController',[
       });
       $rootScope.growlMessages.deleteMessage(msg);
 
-      $http.post(sse_url + '/kickclient', {
-        'client_id': client_id,
-      }).then(function(data) {
-        $log.info({message: 'disable connection for client ' + client_id});
+      $http.post('./kickclient', {
+        'client_id': client_id
+      }).then(
+        function(data) {
+          $log.info({
+            message: 'disable connection for client ' + client_id
+          });
+        });
       });
-    });
     //
 
     $rootScope.start_subscribe = function(argument) {
       $log.info({message: 'Start event source'});
 
       var response_timeout = $timeout(function() {
-      $http.post(sse_url + '/set_sse_timeout',{
-        timeout: '7'
-      }).then(function(data){
-        $log.info({message: 'Handled set_sse_timeout on event source'});
-      }, function(error){
-        $log.error("Error on setting sse_timeout " + error);
-      });
-      $log.info({message: 'Start set_sse_timeout on event source', timeout: response_timeout});
+      $http.post('./set_sse_timeout', {
+          timeout: '7'
+        }).then(function(data) {
+          $log.info({
+            message: 'Handled set_sse_timeout on event source'
+          });
+        });
+        $log.info({
+          message: 'Start set_sse_timeout on event source'
+        });
       }, 20000);
 
       evtSrc = new EventSource(sse_url + '/event_source', {withCredentials: true});
@@ -349,8 +354,8 @@ angular.module('auction').controller('AuctionController',[
         'params': {
           '_nonce': Math.random().toString()
         }
-      }).success(function(data, status, headers, config) {
-        $rootScope.last_sync = new Date(new Date(headers().date));
+      }).then(function(data) {
+        $rootScope.last_sync = new Date(new Date(data.headers().date));
         $rootScope.info_timer = AuctionUtils.prepare_info_timer_data($rootScope.last_sync, $rootScope.auction_doc, $rootScope.bidder_id, $rootScope.Rounds);
         $log.debug({
           message: "Info timer data:",
@@ -362,10 +367,10 @@ angular.module('auction').controller('AuctionController',[
           progress_timer: $rootScope.progres_timer
         });
         var params = AuctionUtils.parseQueryString(location.search);
-        if ($rootScope.auction_doc.current_stage == -1) {
+        if ($rootScope.auction_doc.current_stage == -1){
           if ($rootScope.progres_timer.countdown_seconds < 900) {
             $rootScope.start_changes_feed = true;
-          } else {
+          }else{
             $timeout(function() {
               $rootScope.follow_login = true;
               $rootScope.start_changes_feed = true;
@@ -384,12 +389,12 @@ angular.module('auction').controller('AuctionController',[
           }
           $rootScope.login_params = params;
           delete $rootScope.login_params.wait;
-          $rootScope.login_url =  sse_url + '/login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
+          $rootScope.login_url = './login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
         } else {
           $rootScope.follow_login_allowed = false;
         }
-      }).error(function(data, status, headers, config) {
-
+      }, function(data, status, headers, config) {
+        $log.error("get_current_server_time error");
       });
     };
     $rootScope.warning_post_bid = function(){
@@ -430,74 +435,77 @@ angular.module('auction').controller('AuctionController',[
           $rootScope.post_bid_timeout = $timeout($rootScope.warning_post_bid, 10000);
         }
 
-        $http.post(sse_url + '/postbid', {
-          'bid': parseFloat(bid) || parseFloat($rootScope.form.bid) || 0,
-          'bidder_id': $rootScope.bidder_id || bidder_id || "0"
-        }).then(function(success) {
-          if ($rootScope.post_bid_timeout){
-            $timeout.cancel($rootScope.post_bid_timeout);
-            delete $rootScope.post_bid_timeout;
-          }
-          $rootScope.form.active = false;
-          var msg_id = '';
-          if (success.data.status == 'failed') {
-            for (var error_id in success.data.errors) {
-              for (var i in success.data.errors[error_id]) {
+        $http.post('./postbid', {
+            'bid': parseFloat(bid) || parseFloat($rootScope.form.bid) || 0,
+            'bidder_id': $rootScope.bidder_id || bidder_id || "0"
+          }).then(function(success) {
+            if ($rootScope.post_bid_timeout){
+              $timeout.cancel($rootScope.post_bid_timeout);
+              delete $rootScope.post_bid_timeout;
+            }
+            $rootScope.form.active = false;
+            var msg_id = '';
+            if (success.data.status == 'failed') {
+              for (var error_id in success.data.errors) {
+                for (var i in success.data.errors[error_id]) {
+                  msg_id = Math.random();
+                  $rootScope.alerts.push({
+                    msg_id: msg_id,
+                    type: 'danger',
+                    msg: success.data.errors[error_id][i]
+                  });
+                  $log.info({
+                    message: "Handle failed response on post bid",
+                    bid_data: success.data.errors[error_id][i]
+                  });
+                  $rootScope.auto_close_alert(msg_id);
+                }
+              }
+            } else {
+              var bid = success.data.data.bid;
+              if ((bid <= ($rootScope.max_bid_amount() * 0.1)) && (bid != -1)) {
                 msg_id = Math.random();
                 $rootScope.alerts.push({
                   msg_id: msg_id,
-                  type: 'danger',
-                  msg: success.data.errors[error_id][i]
+                  type: 'warning',
+                  msg: 'Your bid appears too low'
                 });
                 $log.info({
-                  message: "Handle failed response on post bid",
-                  bid_data: success.data.errors[error_id][i]
+                  message: "Your bid appears too low",
+                  bid_data: bid
                 });
-                $rootScope.auto_close_alert(msg_id);
               }
-            }
-          } else {
-            var bid = success.data.bid;
-            if ((bid <= ($rootScope.max_bid_amount() * 0.1)) && (bid != -1)) {
-              var msg_id = Math.random();
-              $rootScope.alerts.push({
-                msg_id: msg_id,
-                type: 'warning',
-                msg: 'Your bid appears too low'
-              });
-            }
-            var msg_id = Math.random();
-            if (bid == -1) {
-              $rootScope.alerts = [];
-              $rootScope.allow_bidding = true;
-              $log.info({
-                message: "Handle cancel bid response on post bid"
-              });
-              $rootScope.alerts.push({
-                msg_id: msg_id,
-                type: 'success',
-                msg: 'Bid canceled'
-              });
-              $rootScope.form.bid = "";
-              $rootScope.form.full_price = '';
-              $rootScope.form.bid_temp = '';
+              msg_id = Math.random();
+              if (bid == -1) {
+                $rootScope.alerts = [];
+                $rootScope.allow_bidding = true;
+                $log.info({
+                  message: "Handle cancel bid response on post bid"
+                });
+                $rootScope.alerts.push({
+                  msg_id: msg_id,
+                  type: 'success',
+                  msg: 'Bid canceled'
+                });
+                $rootScope.form.bid = "";
+                $rootScope.form.full_price = '';
+                $rootScope.form.bid_temp = '';
 
-            } else {
-              $log.info({
-                message: "Handle success response on post bid",
-                bid_data: bid
-              });
-              $rootScope.alerts.push({
-                msg_id: msg_id,
-                type: 'success',
-                msg: 'Bid placed'
-              });
-              $rootScope.allow_bidding = false;
+              } else {
+                $log.info({
+                  message: "Handle success response on post bid",
+                  bid_data: bid
+                });
+                $rootScope.alerts.push({
+                  msg_id: msg_id,
+                  type: 'success',
+                  msg: 'Bid placed'
+                });
+                $rootScope.allow_bidding = false;
+              }
+              $rootScope.auto_close_alert(msg_id);
             }
-            $rootScope.auto_close_alert(msg_id);
-          }
-        })
-          .error(function(error) {
+          }, function(error) {
             $log.info({
               message: "Handle error on post bid",
               bid_data: error.status
