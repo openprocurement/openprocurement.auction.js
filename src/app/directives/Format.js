@@ -1,4 +1,4 @@
-angular.module('auction').directive('format', ['$filter', function ($filter) {
+angular.module('auction').directive('format', ['$filter', function($filter) {
   return {
     require: '?ngModel',
     link: function(scope, elem, attrs, ctrl) {
@@ -16,28 +16,29 @@ angular.module('auction').directive('format', ['$filter', function ($filter) {
         }
       });
       ctrl.$parsers.unshift(function(viewValue) {
+        var newviewValue;
+        var plainNumber;
         console.log(viewValue);
         if (viewValue) {
-          var plainNumber = Number((viewValue || "").replace(/ /g, '').replace(/,/g, "."));
+          plainNumber = Number((viewValue || "").replace(/ /g, '').replace(/,/g, "."));
           if (plainNumber >= 0) {
-            var newviewValue = viewValue;
+            newviewValue = viewValue;
             ctrl.prev_value = viewValue;
           } else {
             try {
-              var plainNumber = Number((ctrl.prev_value || null ).replace(/ /g, '').replace(/,/g, "."));
+              plainNumber = Number((ctrl.prev_value || null).replace(/ /g, '').replace(/,/g, "."));
+            } catch (e) {
+              plainNumber = null;
             }
-            catch (e) {
-              var plainNumber = null;
-            }
-            var newviewValue = ctrl.prev_value;
+            newviewValue = ctrl.prev_value;
           }
           //TODO: linter warn `newviewValue` is out of scope
           ctrl.$viewValue = newviewValue;
           ctrl.$render();
         } else {
-          var plainNumber = null
+          plainNumber = null;
         }
-        return plainNumber
+        return plainNumber;
       });
     }
   };
