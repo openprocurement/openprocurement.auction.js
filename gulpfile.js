@@ -12,6 +12,7 @@ const gulp          = require('gulp'),
       uglify        = require('gulp-uglify'),
       rename        = require("gulp-rename"),
       fs            = require("fs"),
+      eslint        = require('gulp-eslint'),
       merge         = require('merge-stream'),
       server        = require('karma').Server;
 
@@ -185,6 +186,19 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
     return merge(css, images, fonts, vendor_js, listPage, listApp, auctionPage, auctionApp, archivePage, archiveApp, fonts);
 });
 
+gulp.task('lint', () => {
+  return gulp.src(['./src/app/auction.js',
+       './src/app/filters/*.js',
+       './src/app/translations.js',
+       './src/app/config.js',
+       './src/app/factories/*.js',
+       './src/app/controllers/AuctionCtl.js',
+       './src/app/controllers/OffCanvasCtl.js',
+       './src/app/directives/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
 
 gulp.task('default', ['build']);
 
