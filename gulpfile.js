@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const gulp = require('gulp'),
   notify = require('gulp-notify'),
   del = require('del'),
@@ -23,33 +22,6 @@ function interceptErrors(error) {
     message: '<%= error.message %>'
   }).apply(this, args);
   this.emit('end');
-=======
-const gulp          = require('gulp'),
-      notify        = require('gulp-notify'),
-      del           = require('del'),
-      concat        = require('gulp-concat'),
-      util          = require('gulp-util'),
-      vendorFiles   = require('gulp-main-bower-files'),
-      minify        = require('gulp-minify'),
-      gulpFilter    = require('gulp-filter'),
-      source        = require('vinyl-source-stream'),
-      cleanCSS      = require('gulp-clean-css'),
-      fileinclude   = require('gulp-file-include'),
-      uglify        = require('gulp-uglify'),
-      rename        = require("gulp-rename"),
-      fs            = require("fs"),
-      eslint        = require('gulp-eslint'),
-      merge         = require('merge-stream'),
-      server        = require('karma').Server;
-
-function  interceptErrors(error) {
-    let args = Array.prototype.slice.call(arguments);
-    notify.onError({
-	title: 'Compile Error',
-	message: '<%= error.message %>'
-    }).apply(this, args);
-    this.emit('end');
->>>>>>> e3132d610f90f656dee00cfd98a7619f32b8131d
 }
 
 

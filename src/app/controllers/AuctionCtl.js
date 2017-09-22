@@ -89,6 +89,7 @@ angular.module('auction').controller('AuctionController', [
       });
     };
     $rootScope.growlMessages = growlMessages;
+    $rootScope.referenceId = 0;
     growlMessages.initDirective(0, 10);
     dataLayer.push({
       "tenderId": AuctionConfig.auction_doc_id

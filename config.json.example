@@ -1,5 +1,6 @@
 {
   "packages":[
+    "node_modules/event-source-polyfill/eventsource.min.js",
     "node_modules/jquery/dist/jquery.min.js",
     "node_modules/angular/angular.min.js",
     "node_modules/angular-translate/dist/angular-translate.min.js",
@@ -7,12 +8,11 @@
     "node_modules/angular-timer/dist/angular-timer.min.js",
     "node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js",
     "node_modules/angular-translate-storage-local/angular-translate-storage-local.min.js",
-    "node_modules/event-source-polyfill/eventsource.min.js",
     "node_modules/pouchdb/dist/pouchdb.min.js",
     "node_modules/angular-gtm-logger/angular-gtm-logger.min.js",
     "node_modules/bootstrap/dist/js/bootstrap.min.js",
-    "node_modules/angular-bootstrap/ui-bootstrap.min.js",
-    "node_modules/angular-growl-v2/build/angular-growl.min.js",
+    "node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
+    "node_modules/angular-growl-v2/build/angular-growl.js",
     "node_modules/moment/min/moment.min.js",
     "node_modules/moment/locale/uk.js",
     "node_modules/moment/locale/ru.js",
