@@ -5,8 +5,8 @@ body {
     padding-top: 73px;
     padding-bottom: 196px;
 }
-.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, 
-.col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, 
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4,
+.col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8,
 .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
     padding-right: 0;
     padding-left: 0;
@@ -36,7 +36,7 @@ body {
 .header-auction-item-visual {
     display: block;
     max-height: 61px;
-    line-height: 1.1em;
+    line-height: normal;
     overflow: hidden;
 }
 
@@ -197,8 +197,8 @@ body {
 }
 .auction-with-two-prices .label-price {
     width: 100%;
-    float: left;  
-}    
+    float: left;
+}
 
 /* Bids stage forecast*/
 .future-stage {
@@ -255,7 +255,7 @@ body {
     display: block;
     float: left;
     width: 100%;
-}  
+}
 .main-price-block .input-group-btn {
     width: 33.33333333%;
     text-align: right;
@@ -263,7 +263,7 @@ body {
 .main-price-block .full-price-group span,
 .main-price-block .normalized-price-group span {
     display: none;
-} 
+}
 .full-price-group > span:first-child,
 .normalized-price-group > span:first-child {
     font-weight: bold;
@@ -271,9 +271,9 @@ body {
 .bidder-coeficient-wrap {
     padding: 7px 0;
     text-align: center;
-}  
+}
 .full-price-group {
-    padding-left: 0; 
+    padding-left: 0;
 }
 .normalized-price-group {
     padding-left: 5px;
@@ -305,7 +305,7 @@ body {
 @media (max-width: 768px) {
     .fixed-bottom .container {
         padding-right: 5px;
-        padding-left: 5px; 
+        padding-left: 5px;
     }
     .stage-amount {
         -webkit-border-radius: 6px;
@@ -314,8 +314,8 @@ body {
     }
     .price-inform-block {
         display: none;
-    }  
-    .main-price-block .full-price-group span, 
+    }
+    .main-price-block .full-price-group span,
     .main-price-block .normalized-price-group span {
         display: inline-block;
     }
@@ -403,9 +403,9 @@ body {
         float: left;
         width: 100%;
     }
-    .auction-with-one-price #cancel-bid-button, 
-    .auction-with-one-price #place-bid-button, 
-    .auction-with-one-price #edit-bid-button, 
+    .auction-with-one-price #cancel-bid-button,
+    .auction-with-one-price #place-bid-button,
+    .auction-with-one-price #edit-bid-button,
     .auction-with-one-price #clear-bid-button {
         white-space: nowrap;
         margin: 0 15px 0 0;
@@ -416,15 +416,15 @@ body {
         margin-bottom: 15px;
     }
     #cancel-bid-button {
-        margin-top: 35px;  
+        margin-top: 35px;
     }
     .auction-with-one-price #edit-bid-button {
         width: auto;
     }
 }
-@media (max-width: 480px) { 
-    
-    .full-price-group>span:first-child, 
+@media (max-width: 480px) {
+
+    .full-price-group>span:first-child,
     .normalized-price-group>span:first-child,
     .full-price-group .max_bid_amount,
     .normalized-price-group .max_bid_amount {
@@ -440,7 +440,7 @@ body {
     .input-group-btn {
         padding: 26px 0 10px;
     }
-    #clear-bid-button { 
+    #clear-bid-button {
         margin-top: 70px;
     }
 }
@@ -566,7 +566,7 @@ body {
     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
-@media (min-width: 500px) { 
+@media (min-width: 500px) {
     .modal-dialog {
         width: 458px;
     }

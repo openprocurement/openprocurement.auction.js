@@ -348,7 +348,7 @@ angular.module('auction').controller('AuctionController',[
           '_nonce': Math.random().toString()
         }
       }).then(function(data) {
-        $rootScope.last_sync = new Date(new Date(headers().date));
+        $rootScope.last_sync = new Date(new Date(data.headers().date));
         $rootScope.info_timer = AuctionUtils.prepare_info_timer_data($rootScope.last_sync, $rootScope.auction_doc, $rootScope.bidder_id, $rootScope.Rounds);
         $log.debug({
           message: "Info timer data:",
