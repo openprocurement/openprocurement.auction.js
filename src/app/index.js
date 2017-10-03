@@ -5,5 +5,5 @@ const requires = [
 
 
 angular.module('auction', requires).constant(
-    'AuctionConfig', { db_url:  (location.protocol + '//' + location.host + '/database/' ) || ""
+    'AuctionConfig', { db_url:  (location.protocol + '//' + location.host + "/" +  window.db_name ) || ""
 })
