@@ -53,19 +53,19 @@
   "fonts": "src/assets/fonts/*",
   "html": [{
     "name": "index",
-    "scripts": ["/vendor.js", "/index.js"],
+    "scripts": ["/static/vendor.js", "/static/index.js"],
     "styles": ["/static/css/bundle.css"],
     "title": "Auction Software",
     "controller": "ListingController"
   }, {
     "name": "archive",
-    "scripts": ["/vendor.js", "/archive.js"],
+    "scripts": ["/static/vendor.js", "/static/archive.js"],
     "styles": ["/static/css/bundle.css"],
     "title": "Auction Software",
     "controller": "ArchiveController"
   }, {
     "name": "tender",
-    "scripts": ["/vendor.js", "/auction.js"],
+    "scripts": ["/static/vendor.js", "/static/auction.js"],
     "styles": ["/static/css/bundle.css"],
     "title": "Auction Software",
     "controller": "AuctionController"
