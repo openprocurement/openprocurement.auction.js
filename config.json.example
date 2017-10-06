@@ -1,25 +1,84 @@
 {
-
-  "styles": ["src/lib/angular-growl-2/build/angular-growl.min.css",
-             "src/assets/css/starter-template.css"],
-  "fonts": "src/assets/fonts/*",
-  "html": [
-    {"name": "index",   "scripts": ["/vendor.js", "/index_app.js"],   "title": "Auction Software", "controller": "ListingController"},
-    {"name": "archive", "scripts": ["/vendor.js", "/archive_app.js"], "title": "Auction Software", "controller": "ArchiveController"},
-    {"name": "tender",  "scripts": ["/vendor.js", "/auction_app.js"], "title": "Auction Software", "controller": "AuctionController"}
+  "styles": [
+    "node_modules/angular-growl-v2/build/angular-growl.css",
+    "src/assets/css/starter-template.css"
   ],
-  "js": {
-    "listApp": "src/app/index_app.js",
-    "archiveApp": "src/app/archive_app.js",
-    "auctionApp": "src/app/auction_app.js"
-  },
+  "packages": [
+    "node_modules/event-source-polyfill/eventsource.min.js",
+    "node_modules/jquery/dist/jquery.min.js",
+    "node_modules/angular/angular.min.js",
+    "node_modules/angular-translate/dist/angular-translate.min.js",
+    "node_modules/angular-cookies/angular-cookies.min.js",
+    "node_modules/angular-timer/dist/angular-timer.min.js",
+    "node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js",
+    "node_modules/angular-translate-storage-local/angular-translate-storage-local.min.js",
+    "node_modules/pouchdb/dist/pouchdb.min.js",
+    "node_modules/angular-gtm-logger/angular-gtm-logger.min.js",
+    "node_modules/bootstrap/dist/js/bootstrap.min.js",
+    "node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
+    "node_modules/angular-growl-v2/build/angular-growl.js",
+    "node_modules/moment/min/moment.min.js",
+    "node_modules/moment/locale/uk.js",
+    "node_modules/moment/locale/ru.js",
+    "node_modules/moment-timezone/moment-timezone.js",
+    "node_modules/angular-mocks/angular-mocks.js",
+    "node_modules/angular-ellipses/src/truncate.js",
+    "node_modules/mathjs/dist/math.min.js",
+    "node_modules/ua-parser-js/dist/ua-parser.min.js"
+  ],
+  "listingApp": ["./src/app/index.js", "./src/app/config.js",
+    "./src/app/controllers/ListingCtrl.js"
+  ],
+  "archiveApp": ["./src/app/archive.js", "./src/app/config.js",
+    "./src/app/controllers/ArchiveCtl.js"
+  ],
+  "auctionApp": ["./src/app/auction.js",
+    "./src/app/filters/*.js",
+    "./src/app/translations.js",
+    "./src/app/config.js",
+    "./src/app/factories/*.js",
+    "./src/app/controllers/AuctionCtl.js",
+    "./src/app/controllers/OffCanvasCtl.js",
+    "./src/app/directives/*.js"
+  ],
+  "appUtils": ["./src/app/auction.js",
+    "./src/app/filters/*.js",
+    "./src/app/translations.js",
+    "./src/app/config.js",
+    "./src/app/factories/*.js",
+    "./src/app/controllers/AuctionCtl.js",
+    "./src/app/controllers/OffCanvasCtl.js",
+    "./src/app/directives/*.js"
+  ],
+  "fonts": "src/assets/fonts/*",
+  "html": [{
+    "name": "index",
+    "scripts": ["/static/vendor.js", "/static/index.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "ListingController"
+  }, {
+    "name": "archive",
+    "scripts": ["/static/vendor.js", "/static/archive.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "ArchiveController"
+  }, {
+    "name": "tender",
+    "scripts": ["/static/vendor.js", "/static/auction.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "AuctionController"
+  }],
   "img": {
     "png": "src/assets/img/*.png",
     "icons": "src/assets/img/img/*.png"
   },
-  "outDir": "/data/yarsanich/auctions/no-static/openprocurement.auction.buildout/parts/static",
-
+  "outDir": "/data/gvizdyk/zoo/op.auctions/insider-buildout/parts/",
   "buildDir": "build",
-  "dbUrl": "http://localhost:9000/auctions",
-  "auctions_server": "http://localhost:9001"
+  "app_name": "auction.js",
+  "main_css": "bundle.css",
+  "db_name": "database",
+  "name": "tender",
+  "devel": 1
 }
