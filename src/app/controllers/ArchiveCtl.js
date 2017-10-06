@@ -4,7 +4,7 @@ angular.module('auction').controller('ArchiveController', [
     /*@ngInject;*/
     var startid = false;
     var params = $location.search();
-    var offset = params.offset || (new Date()).getTime() * 1000;
+    var offset = params.offset || (new Date()).getTime();
     var startkey_docid = params.startid || '';
     $scope.db_url = (location.protocol + '//' + location.host + "/" + window.db_name) || "";
 

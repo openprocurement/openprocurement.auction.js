@@ -1,6 +1,7 @@
 const gulp = require('gulp'),
   notify = require('gulp-notify'),
   del = require('del'),
+  path = require('path'),
   concat = require('gulp-concat'),
   util = require('gulp-util'),
   minify = require('gulp-minify'),
@@ -11,9 +12,13 @@ const gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   rename = require("gulp-rename"),
   fs = require("fs"),
-  yarn = require("gulp-yarn"),
   merge = require('merge-stream'),
+  eslint = require('gulp-eslint'),
+  pack = require('gulp-tar'),
+  gzip = require('gulp-gzip'),
+  sequence = require('run-sequence'),
   server = require('karma').Server;
+
 
 function interceptErrors(error) {
   let args = Array.prototype.slice.call(arguments);
@@ -27,52 +32,59 @@ function interceptErrors(error) {
 
 const config = JSON.parse(fs.readFileSync('./config.json'));
 const db_name = config.db_name || 'database';
-const app_name = config.app_name || 'acution.js';
+const app_name = config.app_name || 'auction.js';
 const devel = ('devel' in config) ? config.devel : true;
 const main_css = config.main_css || 'bundle.css';
 const name = config.name || 'tender';
+const staticRoot = 'static'
+const fontDir = `${staticRoot}/fonts/`;
+const imgDir = `${staticRoot}/img/`;
+const cssDir = `${staticRoot}/css/`;
+const packageName = 'openprocurement.auction.js';
+const tmpDir = '/tmp/insider';
+const buildDeps = ['css', 'png-images', 'icons', 'htmlPages', 'auctionApp', 'fonts', 'archiveApp', 'listingApp'];
 
 
 gulp.task('fonts', () => {
+  let dest = path.join(config.buildDir, fontDir);
   return gulp.src(config.fonts)
     .on('error', interceptErrors)
-    .pipe(gulp.dest(config.buildDir + '/fonts/'));
+    .pipe(gulp.dest(dest));
 });
 
 
 gulp.task('png-images', () => {
+  let dest = path.join(config.buildDir, imgDir);
   return gulp.src(config.img.png)
     .on('error', interceptErrors)
-    .pipe(gulp.dest(config.buildDir + '/img/'));
+    .pipe(gulp.dest(dest));
 });
 
 
 gulp.task('icons', () => {
+  let dest = path.join(config.buildDir, imgDir);
   return gulp.src(config.img.icons)
     .on('error', interceptErrors)
-    .pipe(gulp.dest(config.buildDir + '/img/'));
+    .pipe(gulp.dest(dest));
 });
 
 
-gulp.task('yarn', () => {
-  return gulp.src(['./package.json'])
-    .pipe(yarn())
-});
-
-
-gulp.task('all-js', ['yarn'], () => {
+gulp.task('all-js', () => {
+  let dest = path.join(config.buildDir, staticRoot);
   return gulp.src(config.packages)
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest(config.buildDir));
+    .pipe(gulp.dest(dest))
+    .on('error', util.log);
 });
 
 
 gulp.task('css', () => {
+  let dest = path.join(config.buildDir, cssDir);
   return gulp.src(config.styles)
     .pipe(concat(main_css))
     .pipe(cleanCSS())
     .on('error', interceptErrors)
-    .pipe(gulp.dest(config.buildDir));
+    .pipe(gulp.dest(dest));
 });
 
 
@@ -95,31 +107,27 @@ gulp.task('htmlPages', () => {
       .on('error', interceptErrors)
       .pipe(rename(page.name + '.html'))
       .pipe(gulp.dest(config.buildDir));
-
   }));
 });
 
 
-
 gulp.task('listingApp', () => {
-  // TODO: uglify
   return gulp.src(config.listingApp)
     .pipe(concat('index.js'))
     .pipe(devel ? util.noop() : uglify({
       mangle: false
     }))
-    .pipe(gulp.dest(config.buildDir));
+    .pipe(gulp.dest(path.join(config.buildDir, staticRoot)));
 });
 
 
 gulp.task('archiveApp', () => {
-  // TODO: uglify
   return gulp.src(config.archiveApp)
     .pipe(concat('archive.js'))
     .pipe(devel ? util.noop() : uglify({
       mangle: false
     }))
-    .pipe(gulp.dest(config.buildDir));
+    .pipe(gulp.dest(path.join(config.buildDir, staticRoot)));
 });
 
 
@@ -129,44 +137,19 @@ gulp.task('auctionApp', () => {
     .pipe(devel ? util.noop() : uglify({
       mangle: false
     }))
-    .pipe(gulp.dest(config.buildDir));
+    .on("error", interceptErrors)
+    .pipe(gulp.dest(path.join(config.buildDir, staticRoot)));
 });
 
 
-gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listingApp', 'archiveApp', 'auctionApp', 'fonts'], () => {
-
-  let css = gulp.src(`${config.buildDir}/${main_css}`)
-    .pipe(gulp.dest(config.outDir + '/static/css/'));
-
-  let listPage = gulp.src(`${config.buildDir}/index.html`)
-    .pipe(gulp.dest(config.outDir));
-
-  let listApp = gulp.src(`${config.buildDir}/index.js`)
-    .pipe(gulp.dest(config.outDir + '/static/'));
-
-  let vendor_js = gulp.src(`${config.buildDir}/vendor.js`)
-    .pipe(gulp.dest(config.outDir + '/static/'));
-
-  let archivePage = gulp.src(`${config.buildDir}/archive.html`)
-    .pipe(gulp.dest(config.outDir));
-
-  let archiveApp = gulp.src(`${config.buildDir}/archive.js`)
-    .pipe(gulp.dest(config.outDir + '/static/'));
-
-  let auctionPage = gulp.src(`${config.buildDir}/${name}.html`)
-    .pipe(gulp.dest(config.outDir));
-
-  let auctionApp = gulp.src(`${config.buildDir}/${app_name}`)
-    .pipe(gulp.dest(config.outDir + '/static/'));
-
-  let images = gulp.src("build/img/*.png")
-    .pipe(gulp.dest(config.outDir + '/static/img/'));
-
-  let fonts = gulp.src("build/fonts/*")
-    .pipe(gulp.dest(config.outDir + '/static/fonts/'));
-
-  return merge(css, images, fonts, vendor_js, listPage, listApp, auctionPage, auctionApp, archivePage, archiveApp, fonts);
+gulp.task('pack', () => {
+  return gulp.src([`${config.buildDir}/**/*`])
+    .pipe(pack(`${packageName}.tar`))
+    .pipe(gzip())
+    .pipe(gulp.dest('dist'))
+    .on("error", interceptErrors)
 });
+
 
 gulp.task('lint', () => {
   return gulp.src(config.appUtils)
@@ -175,13 +158,33 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('default', ['build']);
 
 gulp.task('clean', function () {
   del.sync([config.buildDir + '*/**', config.outDir + '*/**'], {
     force: true
   });
 });
+
+
+gulp.task('bundle', buildDeps);
+
+
+gulp.task('copyToDest', () => {
+  return gulp.src([`${config.buildDir}/**/*`])
+    .on("error", interceptErrors)
+    .pipe(gulp.dest(config.outDir));
+});
+
+
+gulp.task('build', (done) => {
+  return sequence('bundle', 'copyToDest', () => {
+    done();
+  });
+});
+
+
+gulp.task('default', ['build']);
+
 
 gulp.task('test', function (done) {
   new server({

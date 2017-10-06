@@ -1,5 +1,9 @@
 {
-  "packages":[
+  "styles": [
+    "node_modules/angular-growl-v2/build/angular-growl.css",
+    "src/assets/css/starter-template.css"
+  ],
+  "packages": [
     "node_modules/event-source-polyfill/eventsource.min.js",
     "node_modules/jquery/dist/jquery.min.js",
     "node_modules/angular/angular.min.js",
@@ -22,26 +26,59 @@
     "node_modules/mathjs/dist/math.min.js",
     "node_modules/ua-parser-js/dist/ua-parser.min.js"
   ],
-  "styles": ["src/lib/angular-growl-2/build/angular-growl.min.css",
-             "src/assets/css/starter-template.css"],
-  "fonts": "src/assets/fonts/*",
-  "html": [
-    {"name": "index",   "scripts": ["/vendor.js", "/index_app.js"],   "title": "Auction Software", "controller": "ListingController"},
-    {"name": "archive", "scripts": ["/vendor.js", "/archive_app.js"], "title": "Auction Software", "controller": "ArchiveController"},
-    {"name": "tender",  "scripts": ["/vendor.js", "/auction_app.js"], "title": "Auction Software", "controller": "AuctionController"}
+  "listingApp": ["./src/app/index.js", "./src/app/config.js",
+    "./src/app/controllers/ListingCtrl.js"
   ],
-  "js": {
-    "listApp": "src/app/index_app.js",
-    "archiveApp": "src/app/archive_app.js",
-    "auctionApp": "src/app/auction_app.js"
-  },
+  "archiveApp": ["./src/app/archive.js", "./src/app/config.js",
+    "./src/app/controllers/ArchiveCtl.js"
+  ],
+  "auctionApp": ["./src/app/auction.js",
+    "./src/app/filters/*.js",
+    "./src/app/translations.js",
+    "./src/app/config.js",
+    "./src/app/factories/*.js",
+    "./src/app/controllers/AuctionCtl.js",
+    "./src/app/controllers/OffCanvasCtl.js",
+    "./src/app/directives/*.js"
+  ],
+  "appUtils": ["./src/app/auction.js",
+    "./src/app/filters/*.js",
+    "./src/app/translations.js",
+    "./src/app/config.js",
+    "./src/app/factories/*.js",
+    "./src/app/controllers/AuctionCtl.js",
+    "./src/app/controllers/OffCanvasCtl.js",
+    "./src/app/directives/*.js"
+  ],
+  "fonts": "src/assets/fonts/*",
+  "html": [{
+    "name": "index",
+    "scripts": ["/vendor.js", "/index.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "ListingController"
+  }, {
+    "name": "archive",
+    "scripts": ["/vendor.js", "/archive.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "ArchiveController"
+  }, {
+    "name": "tender",
+    "scripts": ["/vendor.js", "/auction.js"],
+    "styles": ["/static/css/bundle.css"],
+    "title": "Auction Software",
+    "controller": "AuctionController"
+  }],
   "img": {
     "png": "src/assets/img/*.png",
     "icons": "src/assets/img/img/*.png"
   },
-  "outDir": "/data/yarsanich/auctions/no-static/openprocurement.auction.buildout/parts/static",
-
+  "outDir": "/data/gvizdyk/zoo/op.auctions/insider-buildout/parts/",
   "buildDir": "build",
-  "dbUrl": "http://localhost:9000/auctions",
-  "auctions_server": "http://localhost:9001"
+  "app_name": "auction.js",
+  "main_css": "bundle.css",
+  "db_name": "database",
+  "name": "tender",
+  "devel": 1
 }
