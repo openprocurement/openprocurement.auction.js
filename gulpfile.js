@@ -13,7 +13,9 @@ const gulp          = require('gulp'),
       rename        = require("gulp-rename"),
       fs            = require("fs"),
       merge         = require('merge-stream'),
-      server        = require('karma').Server;
+      sourcemaps    = require('gulp-sourcemaps'),
+      render        = require('gulp-nunjucks-render'),
+      filenamelist  = require('gulp-filenamelist');
 
 function  interceptErrors(error) {
   let args = Array.prototype.slice.call(arguments);
@@ -52,28 +54,87 @@ gulp.task('icons', () => {
     .pipe(gulp.dest(config.buildDir+'/img/'));
 });
 
-gulp.task('bower-main', () => {
-  return allJs = gulp.src('./bower.json')
-    .pipe(vendorFiles({base: "src/lib"}))
-    .pipe(gulpFilter(['**/*.js']))
-    .pipe(gulp.dest(config.buildDir + '/vendor/'));
+//gulp.task('bower-main', () => {
+//  return allJs = gulp.src('./bower.json')
+//    .pipe(vendorFiles({base: "src/lib"}))
+//    .pipe(gulpFilter(['**/*.js']))
+//    .pipe(gulp.dest(config.buildDir + '/vendor/'));
+//});
+
+
+//"vendor/pouchdb/dist/pouchdb.js",
+//"vendor/event-source-polyfill/eventsource.min.js",
+//"vendor/angular-cookies/angular-cookies.min.js",
+//"vendor/angular-ellipses/src/truncate.js",
+//"vendor/angular-timer/dist/angular-timer.min.js",
+//"vendor/angular-translate/angular-translate.min.js",
+//"vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js",
+//"vendor/angular-translate-storage-local/angular-translate-storage-local.min.js",
+//"vendor/angular-growl-2/build/angular-growl.js",
+//"vendor/angular-gtm-logger/angular-gtm-logger.min.js",
+//"static/js/app.js",
+//"static/js/utils.js",
+//"static/js/translations.js",
+//"static/js/controllers.js",
+//"vendor/moment/locale/uk.js",
+
+
+gulp.task('js:tenders_vendor',  () => {
+  // TODO: uglify only on debug == false\
+  // TODO: cdnizer - https://www.npmjs.com/package/gulp-cdnizer
+  return gulp.src(config.modules.tenders.js.vendor)
+//  .pipe(sourcemaps.init())
+//  .pipe(concat('auction_bundle.js', {newLine: ';\n'}))
+//  .pipe(sourcemaps.write())
+  .pipe(gulp.dest(config.buildDir + '/static/js/vendor' ))
+//  .on('end', () => {
+//    del([config.buildDir + '/vendor'])
+//  });
 });
 
-gulp.task('all-js', ['bower-main'], () => {
-  // TODO: uglify only on debug == false
-  return gulp.src([
-    config.buildDir + '/vendor/angular/angular.min.js',
-    config.buildDir + '/vendor/**/**/*.js',
-    './src/lib/moment/locale/uk.js',
-    './src/lib/moment/locale/ru.js',
-    './src/lib/puchdb/**/*.js'])
-  .pipe(concat('vendor.js'))
-  .pipe(devel ? util.noop() : uglify())
-  .pipe(gulp.dest(config.buildDir))
-  .on('end', () => {
-    del([config.buildDir + '/vendor'])
-  });
+
+gulp.task('js:tenders_app',  () => {
+  // TODO: uglify only on debug == false\
+  // TODO: cdnizer - https://www.npmjs.com/package/gulp-cdnizer
+  return gulp.src(config.modules.tenders.js.src)
+//  .pipe(sourcemaps.init())
+//  .pipe(concat('auction_bundle.js', {newLine: ';\n'}))
+//  .pipe(sourcemaps.write())
+  .pipe(gulp.dest(config.buildDir + '/static/js/app' ))
+//  .on('end', () => {
+//    del([config.buildDir + '/vendor'])
+//  });
 });
+
+
+//gulp.task('all-js', ['bower-main'], () => {
+//  // TODO: uglify only on debug == false
+//  return gulp.src([
+//    config.buildDir + '/vendor/angular/angular.min.js',
+//    config.buildDir + '/vendor/**/**/*.js',
+//    './src/lib/moment/locale/uk.js',
+//    './src/lib/moment/locale/ru.js',
+//    './src/lib/puchdb/**/*.js'])
+//  .pipe(concat('vendor.js'))
+//  .pipe(devel ? util.noop() : uglify())
+//  .pipe(gulp.dest(config.buildDir));
+//});
+//
+//gulp.task('all-js', ['bower-main'], () => {
+//  // TODO: uglify only on debug == false
+//  return gulp.src([
+//    config.buildDir + '/vendor/angular/angular.min.js',
+//    config.buildDir + '/vendor/**/**/*.js',
+//    './src/lib/moment/locale/uk.js',
+//    './src/lib/moment/locale/ru.js',
+//    './src/lib/puchdb/**/*.js'])
+//  .pipe(concat('vendor.js'))
+//  .pipe(devel ? util.noop() : uglify())
+//  .pipe(gulp.dest(config.buildDir))
+//  .on('end', () => {
+//    del([config.buildDir + '/vendor'])
+//  });
+//});
 
 
 gulp.task('css', () => {
@@ -84,27 +145,38 @@ gulp.task('css', () => {
     .pipe(gulp.dest(config.buildDir));
 });
 
-gulp.task('htmlPages', () => {
-  return merge(config.html.map((page) => {
-    return gulp.src('./templates/base.html')
-    .pipe(fileinclude({
-      prefix: '@@',
-      indent: true,
-      context: {
-        title: page.title,
-        name: page.name,
-        scripts: page.scripts,
-        controller: page.controller,
-        db_url: config.dbUrl,
-        db_name: db_name,
-        auctions_server: config.auctions_server
-      }}))
-    .on('error', interceptErrors)
-    .pipe(rename(page.name +'.html'))
+gulp.task('htmlPages', function () {
+    return gulp.src('templates/tender.html')
+    .pipe(render({
+      path: 'templates/',
+      data: config,
+    }))
     .pipe(gulp.dest(config.buildDir));
 
-  }));
 });
+
+
+//gulp.task('htmlPages', () => {
+//  return merge(config.html.map((page) => {
+//    return gulp.src('./templates/base.html')
+//    .pipe(fileinclude({
+//      prefix: '@@',
+//      indent: true,
+//      context: {
+//        title: page.title,
+//        name: page.name,
+//        scripts: page.scripts,
+//        controller: page.controller,
+//        db_url: config.dbUrl,
+//        db_name: db_name,
+//        auctions_server: config.auctions_server
+//      }}))
+//    .on('error', interceptErrors)
+//    .pipe(rename(page.name +'.html'))
+//    .pipe(gulp.dest(config.buildDir));
+//
+//  }));
+//});
 
 
 gulp.task('listingApp', () => {
@@ -126,22 +198,15 @@ gulp.task('archiveApp', () => {
 });
 
 
-gulp.task('auctionApp', () => {
-  return gulp.src(['./src/app/auction.js',
-    './src/app/filters/*.js',
-    './src/app/translations.js',
-    './src/app/config.js',
-    './src/app/factories/*.js',
-    './src/app/controllers/AuctionCtl.js',
-    './src/app/controllers/OffCanvasCtl.js',
-    './src/app/directives/*.js'])
-    .pipe(concat(app_name))
-    .pipe(devel ? util.noop() : uglify({ mangle: false}))
-    .pipe(gulp.dest(config.buildDir));
-});
+//gulp.task('auctionApp', () => {
+//  return gulp.src([])
+//    .pipe(concat(app_name))
+//    .pipe(devel ? util.noop() : uglify({ mangle: false}))
+//    .pipe(gulp.dest(config.buildDir));
+//});
 
 
-gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listingApp', 'archiveApp', 'auctionApp', 'fonts'], () => {
+gulp.task('build', ['js:auction_bundle', 'css', 'png-images', 'icons', 'htmlPages', 'listingApp', 'archiveApp', 'fonts'], () => {
 
   let css = gulp.src(`${config.buildDir}/${main_css}`)
       .pipe(gulp.dest(config.outDir + '/static/css/'));
@@ -152,7 +217,7 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
   let listApp = gulp.src(`${config.buildDir}/index.js`)
       .pipe(gulp.dest(config.outDir + '/static/'));
 
-  let vendor_js = gulp.src(`${config.buildDir}/vendor.js`)
+  let vendor_js = gulp.src(`${config.buildDir}/auction_bundle.js`)
       .pipe(gulp.dest(config.outDir + '/static/'));
 
   let archivePage = gulp.src(`${config.buildDir}/archive.html`)
@@ -164,8 +229,8 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
   let auctionPage = gulp.src(`${config.buildDir}/tender.html`)
       .pipe(gulp.dest(config.outDir));
 
-  let auctionApp = gulp.src(`${config.buildDir}/${app_name}`)
-      .pipe(gulp.dest(config.outDir + '/static/'));
+//  let auctionApp = gulp.src(`${config.buildDir}/${app_name}`)
+//      .pipe(gulp.dest(config.outDir + '/static/'));
 
   let png = gulp.src("build/*.png")
       .pipe(gulp.dest(config.outDir + '/static/img/'));
@@ -180,7 +245,7 @@ gulp.task('build', ['all-js', 'css', 'png-images', 'icons', 'htmlPages', 'listin
       .pipe(gulp.dest(config.outDir+'/fonts/'));
 
 
-  return merge(css, png, vendor_js, listPage, listApp, auctionPage, auctionApp, archivePage, archiveApp, fonts, fonts2, icons);
+  return merge(css, png, vendor_js, listPage, listApp, auctionPage, archivePage, archiveApp, fonts, fonts2, icons);
 });
 
 
@@ -188,11 +253,4 @@ gulp.task('default', ['clean', 'build']);
 
 gulp.task('clean', function () {
   del.sync([config.buildDir + '*/**', config.outDir + '*/**'], {force: true});
-});
-
-gulp.task('test', function(done) {
-  new server({
-    configFile:__dirname + '/karma.conf.js',
-    singleRun: true
-  }, done).start();
 });
