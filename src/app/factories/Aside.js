@@ -1,4 +1,4 @@
-angular.module('auction').factory('$aside', ['$modal', function ($modal) {
+angular.module('auction').factory('$aside', ['$uibModal', '$document', function ($uibModal, $document) {
   var asideFactory = {
     open: function(config) {
       var options = angular.extend({}, config);
@@ -6,8 +6,8 @@ angular.module('auction').factory('$aside', ['$modal', function ($modal) {
       // set aside classes
       options.windowClass = 'ng-aside horizontal left' + (options.windowClass ? ' ' + options.windowClass : '');
       // delete options.placement
-      return $modal.open(options);
+      return $uibModal.open(options);
     }
   };
-  return angular.extend({}, $modal, asideFactory);
+  return angular.extend({}, $uibModal, asideFactory);
 }]);

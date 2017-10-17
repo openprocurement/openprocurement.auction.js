@@ -1,8 +1,26 @@
+{% set controller = "ListingController" %}
+{% extends "base/base.html" %}
+{% block head %}
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/static/css/all.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Перелік аукціонів</title>
+
+{% endblock %}
+
+{% block body %}
+<body>
 <noscript>
   For full functionality of this site it is necessary to enable JavaScript.
   Here are the http://www.enable-javascript.com
   instructions how to enable JavaScript in your web browser.
 </noscript>
+{% raw %}
 <div class="container" ng-cloak>
   <div class="list-group" >
     <div
@@ -24,3 +42,10 @@
     </div>
   </div>
 </div>
+{% endraw %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="/static/js/vendor.js"></script>
+<script type="text/javascript" src="/static/js/index.js"></script>
+</body>
+{% endblock %}

@@ -1,6 +1,7 @@
 .couchapprc
 _attachments
 build
+dist
 node_modules
 src/lib
 *egg-info/*

@@ -6,7 +6,7 @@ angular.module('auction').controller('AuctionController',[
   $timeout, $http, $log, $cookies, $cookieStore, $window,
   $rootScope, $location, $translate, $filter, growl, growlMessages, $aside, $q)
   {
-    var sse_url = window.location.href.replace(window.location.search, '');
+    var base_url = window.location.href.replace(window.location.search, '');
     var evtSrc = '';
     var response_timeout = '';
 
@@ -122,7 +122,7 @@ angular.module('auction').controller('AuctionController',[
     $rootScope.$on('timer-tick', function(event) {
       if (($rootScope.auction_doc) && (event.targetScope.timerid == 1)) {
         if (((($rootScope.info_timer || {}).msg || "") === 'until your turn') && (event.targetScope.minutes == 1) && (event.targetScope.seconds == 50)) {
-          $http.post(sse_url + '/check_authorization').then(function(data) {
+          $http.post(base_url + '/check_authorization').then(function(data) {
             $log.info({
               message: "Authorization checked"
             });
@@ -162,7 +162,7 @@ angular.module('auction').controller('AuctionController',[
       });
       $rootScope.growlMessages.deleteMessage(msg);
 
-      $http.post(sse_url + '/kickclient', {
+      $http.post(base_url + '/kickclient', {
         'client_id': client_id,
       }).then(function(data) {
         $log.info({message: 'disable connection for client ' + client_id});
@@ -174,7 +174,7 @@ angular.module('auction').controller('AuctionController',[
       $log.info({message: 'Start event source'});
 
       var response_timeout = $timeout(function() {
-      $http.post(sse_url + '/set_sse_timeout', {timeout: '7'}).then(function(data){
+      $http.post(base_url + '/set_sse_timeout', {timeout: '7'}).then(function(data){
         $log.info({message: 'Handled set_sse_timeout on event source'});
       }, function(error){
         $log.error("Error on setting sse_timeout " + error);
@@ -182,7 +182,7 @@ angular.module('auction').controller('AuctionController',[
       $log.info({message: 'Start set_sse_timeout on event source', timeout: response_timeout});
       }, 20000);
 
-      $rootScope.evtSrc = new EventSource(sse_url + '/event_source', {withCredentials: true});
+      $rootScope.evtSrc = new EventSource(base_url + '/event_source', {withCredentials: true});
       $rootScope.restart_retries_events = 3;
       $rootScope.evtSrc.addEventListener('ClientsList', function(e) {
         var data = angular.fromJson(e.data);
@@ -382,7 +382,7 @@ angular.module('auction').controller('AuctionController',[
           }
           $rootScope.login_params = params;
           delete $rootScope.login_params.wait;
-          $rootScope.login_url =  sse_url + '/login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
+          $rootScope.login_url =  base_url + '/login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
         } else {
           $rootScope.follow_login_allowed = false;
         }
@@ -428,7 +428,7 @@ angular.module('auction').controller('AuctionController',[
           $rootScope.post_bid_timeout = $timeout($rootScope.warning_post_bid, 10000);
         }
 
-        $http.post(sse_url + '/postbid', {
+        $http.post(base_url + '/postbid', {
           'bid': parseFloat(bid) || parseFloat($rootScope.form.bid) || 0,
           'bidder_id': $rootScope.bidder_id || bidder_id || "0"
         }).then(function(success) {
@@ -445,7 +445,7 @@ angular.module('auction').controller('AuctionController',[
                 $rootScope.alerts.push({
                   msg_id: msg_id,
                   type: 'danger',
-                  msg: data.errors[error_id][i]
+                  msg: success.data.errors[error_id][i]
                 });
                 $log.info({
                   message: "Handle failed response on post bid",
@@ -463,11 +463,11 @@ angular.module('auction').controller('AuctionController',[
                 type: 'warning',
                 msg: 'Your bid appears too low'
               });
+              $log.info({
+                message: "Your bid appears too low",
+                bid_data: bid
+              });
             }
-            $log.info({
-              message: "Your bid appears too low",
-              bid_data: bid
-            });
             var msg_id = Math.random();
             if (bid == -1) {
               $rootScope.alerts = [];
@@ -773,8 +773,6 @@ angular.module('auction').controller('AuctionController',[
     $rootScope.open_menu = function() {
       var modalInstance = $aside.open({
         templateUrl: 'templates/menu.html',
-        controller: 'OffCanvasController',
-        scope: $rootScope,
         size: 'lg',
         backdrop: true
       });
