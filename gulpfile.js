@@ -109,11 +109,12 @@ gulp.task('build', ['revreplace'], () => {
       .pipe(gulp.dest(config.outDir));
 });
 
-gulp.task('build:buildout', ['default'], () => {
-  return gulp.src(config.dist + '/**/*.*')
+gulp.task('build:buildout', ['clean', 'build'], () => {
+  return gulp.src(config.outDir + '/**/*.*')
       .pipe(gulp.dest(config.buildout_outDir));
 })
-gulp.task('default', ['clean', 'build']);
+
+gulp.task('default', ['build:buildout']);
 
 gulp.task('clean', function () {
   del.sync([config.buildDir + '*/**', config.outDir + '*/**'], {force: true});
