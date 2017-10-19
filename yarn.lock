@@ -2970,6 +2970,13 @@ gulp-rename@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
+gulp-rev-delete-original@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/gulp-rev-delete-original/-/gulp-rev-delete-original-0.2.3.tgz#81f3f95db3bd3a324923df6d235ae953c2ac038d"
+  dependencies:
+    rimraf "^2.3.4"
+    through2 "^0.6.5"
+
 gulp-rev-replace@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/gulp-rev-replace/-/gulp-rev-replace-0.4.3.tgz#72b51848f5f093ad4b77b1d2411081eb78acd46e"
@@ -5677,7 +5684,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.3.4, rimraf@^2.5.1, rimraf@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:

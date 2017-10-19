@@ -17,7 +17,8 @@ const gulp          = require('gulp'),
       render        = require('gulp-nunjucks-render'),
       data          = require('gulp-data'),
       rev           = require('gulp-rev'),
-      revReplace    = require('gulp-rev-replace');
+      revReplace    = require('gulp-rev-replace'),
+      revdel        = require('gulp-rev-delete-original');
 
 function  interceptErrors(error) {
   let args = Array.prototype.slice.call(arguments);
@@ -89,8 +90,10 @@ gulp.task('revision', ['base:all', 'js:vendor', 'js:tenders', 'js:index', 'js:ar
   return gulp.src([config.buildDir + '/**/*.css', config.buildDir + '/**/*.js'])
     .pipe(rev())
     .pipe(gulp.dest(config.buildDir))
+    .pipe(revdel())
     .pipe(rev.manifest())
-    .pipe(gulp.dest(config.buildDir))
+    .pipe(gulp.dest(config.buildDir));
+//    .pipe(rmOrig());
 })
 
 gulp.task('revreplace', ['revision'], function(){
@@ -107,7 +110,7 @@ gulp.task('build', ['revreplace'], () => {
 });
 
 gulp.task('build:buildout', ['default'], () => {
-  return gulp.src(config.outDir + '/**/*.*')
+  return gulp.src(config.dist + '/**/*.*')
       .pipe(gulp.dest(config.buildout_outDir));
 })
 gulp.task('default', ['clean', 'build']);
