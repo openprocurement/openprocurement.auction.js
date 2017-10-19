@@ -10,8 +10,8 @@ const gulp          = require('gulp'),
       cleanCSS      = require('gulp-clean-css'),
       fileinclude   = require('gulp-file-include'),
       uglify        = require('gulp-uglify'),
-      rename        = require("gulp-rename"),
-      fs            = require("fs"),
+      rename        = require('gulp-rename'),
+      fs            = require('fs'),
       merge         = require('merge-stream'),
       sourcemaps    = require('gulp-sourcemaps'),
       render        = require('gulp-nunjucks-render'),
@@ -85,7 +85,23 @@ gulp.task('html:all', () => {
 
 });
 
-gulp.task('build', ['base:all', 'js:vendor', 'js:tenders', 'js:index', 'js:archive',  'css:all', 'html:all'], () => {
+gulp.task('revision', ['base:all', 'js:vendor', 'js:tenders', 'js:index', 'js:archive',  'css:all', 'html:all'], function(){
+  return gulp.src([config.buildDir + '/**/*.css', config.buildDir + '/**/*.js'])
+    .pipe(rev())
+    .pipe(gulp.dest(config.buildDir))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest(config.buildDir))
+})
+
+gulp.task('revreplace', ['revision'], function(){
+  var manifest = gulp.src(config.buildDir + '/rev-manifest.json');
+
+  return gulp.src(config.buildDir + '/*.html')
+    .pipe(revReplace({manifest: manifest}))
+    .pipe(gulp.dest(config.buildDir));
+});
+
+gulp.task('build', ['revreplace'], () => {
   return gulp.src(config.buildDir + '/**/*.*')
       .pipe(gulp.dest(config.outDir));
 });
