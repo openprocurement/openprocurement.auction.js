@@ -90,7 +90,10 @@ gulp.task('build', ['base:all', 'js:vendor', 'js:tenders', 'js:index', 'js:archi
       .pipe(gulp.dest(config.outDir));
 });
 
-
+gulp.task('build:buildout', ['default'], () => {
+  return gulp.src(config.outDir + '/**/*.*')
+      .pipe(gulp.dest(config.buildout_outDir));
+})
 gulp.task('default', ['clean', 'build']);
 
 gulp.task('clean', function () {
