@@ -12,7 +12,7 @@ angular.module('auction').controller('ArchiveController', [
 
   $http({
     method: 'GET',
-    url: AuctionConfig.db_url + '/_design/auctions/_view/by_endDate',
+    url: AuctionConfig.remote_db + '/_design/auctions/_view/by_endDate',
     cache: true,
     params: {
       include_docs: true,

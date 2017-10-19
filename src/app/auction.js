@@ -1,5 +1,5 @@
 var appRequires = [
-  'ui.bootstrap',
+      'ui.bootstrap',
   'ngCookies',
   'pascalprecht.translate',
   'timer',
