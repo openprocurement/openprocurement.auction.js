@@ -654,71 +654,80 @@ angular.module('auction').controller('AuctionController',[
           }
           return;
         }
-        $rootScope.http_error_timeout = $rootScope.default_http_error_timeout;
-        var params = AuctionUtils.parseQueryString(location.search);
+        if (doc.procurementMethodType !== 'belowThreshold') {
+          $log.error({
+            message: 'Please use the correct link to view the auction'
+          });
+          $rootScope.document_not_found = true;
+          var msg_correct_link = $filter('translate')('Please use the correct link to view the auction.');
+          document.body.insertAdjacentHTML( 'afterbegin', '<div class="container alert alert-danger" role="alert">' + msg_correct_link +'</div>' );
+        } else {
+          $rootScope.http_error_timeout = $rootScope.default_http_error_timeout;
+          var params = AuctionUtils.parseQueryString(location.search);
 
-        $rootScope.start_sync_event = $q.defer();
-        if (doc.current_stage >= -1 && params.wait) {
-    $log.info("login allowed " + doc.current_stage);
-          $rootScope.follow_login_allowed = true;
-          $log.info({message: 'client wait for login'});
-        } else {
-          $rootScope.follow_login_allowed = false;
-        }
-        $rootScope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $rootScope.lang);
-        $rootScope.replace_document(doc);
-        $rootScope.document_exists = true;
-        if (AuctionUtils.UnsupportedBrowser()) {
-          $timeout(function() {
-            $rootScope.unsupported_browser = true;
-            growl.error($filter('translate')('Your browser is out of date, and this site may not work properly.') + '<a style="color: rgb(234, 4, 4); text-decoration: underline;" href="http://browser-update.org/uk/update.html">' + $filter('translate')('Learn how to update your browser.') + '</a>', {
-              ttl: -1,
-              disableCountDown: true
-            });
-          }, 500);
-        };
-        $rootScope.scroll_to_stage();
-        if ($rootScope.auction_doc.current_stage != ($rootScope.auction_doc.stages.length - 1)) {
-          if ($cookieStore.get('auctions_loggedin')||AuctionUtils.detectIE()) {
-            $log.info({
-              message: 'Start private session'
-            });
-            $rootScope.start_subscribe();
+          $rootScope.start_sync_event = $q.defer();
+          if (doc.current_stage >= -1 && params.wait) {
+            $log.info("login allowed " + doc.current_stage);
+            $rootScope.follow_login_allowed = true;
+            $log.info({message: 'client wait for login'});
           } else {
-            $log.info({
-              message: 'Start anonymous session'
-            });
-            if ($rootScope.auction_doc.current_stage == - 1){
-              $rootScope.$watch('start_changes_feed', function(newValue, oldValue){
-                if(newValue && !($rootScope.sync)){
-                  $log.info({
-                    message: 'Start changes feed'
-                  });
-                  $rootScope.sync = $rootScope.start_sync();
-                }
-              });
-            } else {
-              $rootScope.start_sync_event.resolve('start');
-            }
-      $log.info("LOGIN ALLOWED " + $rootScope.follow_login_allowed);
-            if (!$rootScope.follow_login_allowed) {
-              $timeout(function() {
-                growl.info($filter('translate')('You are an observer and cannot bid.'), {
-                  ttl: -1,
-                  disableCountDown: true
-                });
-              }, 500);
-            }
+            $rootScope.follow_login_allowed = false;
           }
-          $rootScope.restart_retries = AuctionConfig.restart_retries;
-          $rootScope.start_sync_event.promise.then(function() {
-            $rootScope.sync = $rootScope.start_sync();
-          });
-        } else {
-          // TODO: CLEAR COOKIE
-          $log.info({
-            message: 'Auction ends already'
-          });
+          $rootScope.title_ending = AuctionUtils.prepare_title_ending_data(doc, $rootScope.lang);
+          $rootScope.replace_document(doc);
+          $rootScope.document_exists = true;
+          if (AuctionUtils.UnsupportedBrowser()) {
+            $timeout(function() {
+              $rootScope.unsupported_browser = true;
+              growl.error($filter('translate')('Your browser is out of date, and this site may not work properly.') + '<a style="color: rgb(234, 4, 4); text-decoration: underline;" href="http://browser-update.org/uk/update.html">' + $filter('translate')('Learn how to update your browser.') + '</a>', {
+                ttl: -1,
+                disableCountDown: true
+              });
+            }, 500);
+          };
+          $rootScope.scroll_to_stage();
+          if ($rootScope.auction_doc.current_stage != ($rootScope.auction_doc.stages.length - 1)) {
+            if ($cookieStore.get('auctions_loggedin')||AuctionUtils.detectIE()) {
+              $log.info({
+                message: 'Start private session'
+              });
+              $rootScope.start_subscribe();
+            } else {
+              $log.info({
+                message: 'Start anonymous session'
+              });
+              if ($rootScope.auction_doc.current_stage == - 1){
+                $rootScope.$watch('start_changes_feed', function(newValue, oldValue){
+                  if(newValue && !($rootScope.sync)){
+                    $log.info({
+                      message: 'Start changes feed'
+                    });
+                    $rootScope.sync = $rootScope.start_sync();
+                  }
+                });
+              } else {
+                $rootScope.start_sync_event.resolve('start');
+              }
+              $log.info("LOGIN ALLOWED " + $rootScope.follow_login_allowed);
+              if (!$rootScope.follow_login_allowed) {
+                $timeout(function() {
+                  growl.info($filter('translate')('You are an observer and cannot bid.'), {
+                    ttl: -1,
+                    disableCountDown: true
+                  });
+                }, 500);
+              }
+            }
+            $rootScope.restart_retries = AuctionConfig.restart_retries;
+            $rootScope.start_sync_event.promise.then(function() {
+              $rootScope.sync = $rootScope.start_sync();
+            });
+          } else {
+            // TODO: CLEAR COOKIE
+            $log.info({
+              message: 'Auction ends already'
+            });
+          }
         }
       });
     };
