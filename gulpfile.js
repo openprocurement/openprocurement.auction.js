@@ -93,7 +93,6 @@ gulp.task('revision', ['base:all', 'js:vendor', 'js:tenders', 'js:index', 'js:ar
     .pipe(revdel())
     .pipe(rev.manifest())
     .pipe(gulp.dest(config.buildDir));
-//    .pipe(rmOrig());
 })
 
 gulp.task('revreplace', ['revision'], function(){
