@@ -71,8 +71,12 @@ gulp.task('icons', () => {
 
 gulp.task('all-js', () => {
   let dest = path.join(config.buildDir, staticRoot);
+  console.log(dest)
   return gulp.src(config.packages)
     .pipe(concat('vendor.js'))
+    .pipe(devel ? util.noop() : uglify({
+      mangle: false
+    }))
     .pipe(gulp.dest(dest))
     .on('error', util.log);
 });
@@ -177,7 +181,7 @@ gulp.task('copyToDest', () => {
 
 
 gulp.task('build', (done) => {
-  return sequence('bundle', 'copyToDest', () => {
+  return sequence('all-js', 'bundle', 'copyToDest', () => {
     done();
   });
 });
