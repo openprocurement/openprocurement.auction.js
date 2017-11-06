@@ -654,7 +654,7 @@ angular.module('auction').controller('AuctionController',[
           }
           return;
         }
-        if (doc.procurementMethodType !== 'belowThreshold') {
+        if (doc.procurementMethodType === 'esco') {
           $log.error({
             message: 'Please use the correct link to view the auction'
           });
