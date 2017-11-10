@@ -30,15 +30,9 @@ angular.module('auction').controller('ArchiveController', [
   }).then(function(resp) {
     $scope.auctions = resp.data.rows;
       $scope.offset = false;
-
       if (($scope.auctions || []).length > 100) {
         $scope.offset = $scope.auctions[100].key;
         $scope.startid = $scope.auctions[100].id;
       }
   });
-
-  if (($scope.auctions || []).lenght > 100) {
-    $scope.offset = $scope.auctions[100].key;
-    $scope.startid = $scope.auctions[100].id;
-  }
 }])
