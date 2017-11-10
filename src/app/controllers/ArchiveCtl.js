@@ -3,12 +3,21 @@ angular.module('auction').controller('ArchiveController', [
   function(AuctionConfig, $scope, $http, $location) {
   /*@ngInject;*/
   $scope.startid = false;
+  function getJsonFromUrl() {
+      var query = location.search.substr(1);
+      var result = {};
+      query.split("&").forEach(function(part) {
+        var item = part.split("=");
+        result[item[0]] = decodeURIComponent(item[1]);
+      });
+      return result;
+  }
+  var params = getJsonFromUrl()
 
-  var params = $location.search();
   console.log(params);
 
   $scope.offset = params.offset || (new Date()).getTime() * 1000;
-  var startkey_docid = params.startid || '';
+  $scope.startid = params.startid || '';
 
   $http({
     method: 'GET',
@@ -17,7 +26,7 @@ angular.module('auction').controller('ArchiveController', [
     params: {
       include_docs: true,
       startkey: $scope.offset,
-      startkey_docid: startkey_docid,
+      startkey_docid: $scope.startid,
       limit: 101,
       descending: true,
     },
@@ -30,8 +39,6 @@ angular.module('auction').controller('ArchiveController', [
         $scope.startid = $scope.auctions[100].id;
       }
   });
-
-  offset = false;
 
   if (($scope.auctions || []).lenght > 100) {
     $scope.offset = $scope.auctions[100].key;
