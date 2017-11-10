@@ -13,9 +13,6 @@ angular.module('auction').controller('ArchiveController', [
       return result;
   }
   var params = getJsonFromUrl()
-
-  console.log(params);
-
   $scope.offset = params.offset || (new Date()).getTime() * 1000;
   $scope.startid = params.startid || '';
 
