@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='openprocurement.auction.js',
-      version='1.0.4b2+eauctions',
+      version='1.0.4b3+eauctions',
       description='frontend application for openprocurement.auction',
       classifiers=[
           "Framework :: Pylons",
