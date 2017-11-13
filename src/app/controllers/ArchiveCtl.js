@@ -15,10 +15,11 @@ angular.module('auction').controller('ArchiveController', [
   var params = getJsonFromUrl()
   $scope.offset = params.offset || (new Date()).getTime() * 1000;
   $scope.startid = params.startid || '';
+  $scope.db_url = (location.protocol + '//' + location.host + "/" + window.db_name) || "";
 
   $http({
     method: 'GET',
-    url: AuctionConfig.remote_db + '/_design/auctions/_view/by_endDate',
+    url: $scope.db_url + '/_design/auctions/_view/by_endDate',
     cache: true,
     params: {
       include_docs: true,

@@ -13,7 +13,6 @@ angular.module('auction').controller('ListingController', [
         startkey: (new Date()).getTime()
       },
     }).then(function(resp) {
-      console.log($scope.auctions);
       $scope.auctions = resp.data.rows;
     });
   }
