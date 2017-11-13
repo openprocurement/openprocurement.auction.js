@@ -77,7 +77,6 @@ angular.module('auction').controller('AuctionController', [
         $rootScope.db = db;
         $rootScope.http_error_timeout = $rootScope.default_http_error_timeout;
         $rootScope.start_auction_process();
-        $rootScope.info_correct_template();
       }).catch(function (error) {
         $log.error({
           message: "Error on setup connection to remote_db",
@@ -680,9 +679,16 @@ angular.module('auction').controller('AuctionController', [
           }
           return;
         }
+      if (doc.procurementMethodType === 'dgfInsider') {
+        $log.error({
+          message: 'Please use the correct link to view the auction'
+        });
+        $rootScope.document_not_found = true;
+        var msg_correct_link = $filter('translate')('Please use the correct link to view the auction.');
+        document.body.insertAdjacentHTML( 'afterbegin', '<div class="container alert alert-danger" role="alert">' + msg_correct_link +'</div>' );
+      } else {
         $rootScope.http_error_timeout = $rootScope.default_http_error_timeout;
         var params = AuctionUtils.parseQueryString(location.search);
-
         $rootScope.start_sync_event = $q.defer();
         if (doc.current_stage >= -1 && params.wait) {
           $log.info("login allowed " + doc.current_stage);
@@ -748,6 +754,7 @@ angular.module('auction').controller('AuctionController', [
             message: 'Auction ends already'
           });
         }
+      }
       });
     };
     $rootScope.restart_changes = function () {
@@ -782,13 +789,6 @@ angular.module('auction').controller('AuctionController', [
       $rootScope.scroll_to_stage();
       $rootScope.show_bids_form();
       $rootScope.$apply();
-    };
-    $rootScope.info_correct_template = function () {
-      if ($rootScope.auction_doc.procurementMethodType === 'dgfInsider') {
-        growl.error($filter('translate')('Please use the') + '' + '&nbsp;<a class="text-danger" href="/insider-auctions/'+ $rootScope.auction_doc._id + '"><u><b>' + $filter('translate')('correct link') + '</b></u></a>&nbsp;' + $filter('translate')('to view the insider auction.'), {
-          ttl: -1
-        });
-      }
     };
     $rootScope.calculate_rounds = function (argument) {
       $rootScope.Rounds = [];
