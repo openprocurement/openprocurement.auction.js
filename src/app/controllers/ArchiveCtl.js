@@ -2,13 +2,19 @@ angular.module('auction').controller('ArchiveController', [
   'AuctionConfig', '$scope', '$http', '$location',
   function(AuctionConfig, $scope, $http, $location) {
   /*@ngInject;*/
-  var startid = false;
-
-  var params = $location.search();
-  console.log(params);
-
-  var offset = params.offset || (new Date()).getTime() * 1000;
-  var startkey_docid = params.startid || '';
+  $scope.startid = false;
+  function getJsonFromUrl() {
+      var query = location.search.substr(1);
+      var result = {};
+      query.split("&").forEach(function(part) {
+        var item = part.split("=");
+        result[item[0]] = decodeURIComponent(item[1]);
+      });
+      return result;
+  }
+  var params = getJsonFromUrl()
+  $scope.offset = params.offset || (new Date()).getTime() * 1000;
+  $scope.startid = params.startid || '';
 
   $http({
     method: 'GET',
@@ -16,21 +22,17 @@ angular.module('auction').controller('ArchiveController', [
     cache: true,
     params: {
       include_docs: true,
-      startkey: offset,
-      startkey_docid: startkey_docid,
+      startkey: $scope.offset,
+      startkey_docid: $scope.startid,
       limit: 101,
       descending: true,
     },
   }).then(function(resp) {
     $scope.auctions = resp.data.rows;
+      $scope.offset = false;
+      if (($scope.auctions || []).length > 100) {
+        $scope.offset = $scope.auctions[100].key;
+        $scope.startid = $scope.auctions[100].id;
+      }
   });
-
-  offset = false;
-
-  if (($scope.auctions || []).lenght > 100) {
-    offset = $scope.auctions[100].key;
-    startid = $scope.auctions[100].id;
-  }
-  $scope.offset = offset;
-  $scope.startid = startid;
 }])
