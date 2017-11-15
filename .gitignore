@@ -4,4 +4,5 @@ build
 dist
 node_modules
 src/lib
+src/assets/css/starter-template.css
 *egg-info/*
