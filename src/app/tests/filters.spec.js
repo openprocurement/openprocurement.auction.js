@@ -24,7 +24,7 @@ describe('Unit: Testing Filter "formatnumber" - ', function() {
     expect($filter('formatnumber')('string')).toEqual('');
     expect($filter('formatnumber')('')).toEqual($filter('number')('')); // '0' 
     expect($filter('formatnumber')({})).toEqual('');
-    expect($filter('formatnumber')(true)).toEqual('1');
-    expect($filter('formatnumber')(false)).toEqual('0');
+    expect($filter('formatnumber')(true)).toEqual('');
+    expect($filter('formatnumber')(false)).toEqual('');
   }));
 });
