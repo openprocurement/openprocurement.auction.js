@@ -44,10 +44,6 @@
     "src/assets/css/starter-template.css"
   ],
   "assets": "src/assets/base/**/*.*",
-  "img": {
-    "png": "src/assets/img/img/*.png",
-    "icons": "src/assets/img/*.png"
-  },
   "buildout_outDir": "../../parts",
   "outDir": "dist",
   "buildDir": "build"
