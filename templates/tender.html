@@ -393,7 +393,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="container">
-                                <alert ng-repeat="alert in alerts" type="{{alert.type}}" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></alert>
+                                <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" ng-class="'alert-' + (alert.type || 'warning')" class="bids-form-alert" close="closeAlert(alert.msg_id)"><span class="bids-form-alert-msg">{{ alert.msg | translate }}</span></div>
                                 <form id="BidsForm" name="form.BidsForm" role="form">
                                     <label for="bid"><span translate>Your proposal</span>:</label>
                                     <span ng-init="max_bid_amount()" class="max_bid_amount" id="max_bid_amount" ng-if="(auction_doc.auction_type||'default') == 'default'"><span id="max_bid_amount_price">{{ calculated_max_bid_amount|fraction }}</span> {{'or higher'|translate}}</span>
