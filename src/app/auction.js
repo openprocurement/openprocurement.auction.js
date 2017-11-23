@@ -10,7 +10,7 @@ var appRequires = [
 
 var db = {},
   bidder_id = "0",
-  db_url = (location.protocol + '//' + location.host + "/" + window.db_name) || "",
+  db_url = db_url || (location.protocol + '//' + location.host + "/" + window.db_name) || "",
   _LTracker = _LTracker || [],
   dataLayer = dataLayer || [];
 
