@@ -59,19 +59,14 @@ gulp.task('js:archive', () => {
     .pipe(gulp.dest(config.buildDir + '/static/js'));
 });
 
-gulp.task('css:less', () => {
+gulp.task('css:all', () => {
   let autoprefix = new lessAutoprefix({ browsers: ['last 2 versions'] });
-  return gulp.src('src/assets/css/starter-template.less')
+  return gulp.src(config.styles)
+    .pipe(concat('all.less'))
     .pipe(less({
       plugins: [autoprefix]
     }))
     .on('error', interceptErrors)
-    .pipe(gulp.dest('src/assets/css/'));
-});
-
-gulp.task('css:all', ['css:less'], () => {
-  return gulp.src(config.styles)
-    .pipe(concat('all.css'))
     .pipe(cleanCSS({ compatibility: 'ie11' }))
     .pipe(gulp.dest(config.buildDir + '/static/css'));
 });

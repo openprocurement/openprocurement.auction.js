@@ -41,7 +41,8 @@
   ],
   "styles": [
     "node_modules/angular-growl-v2/build/angular-growl.css",
-    "src/assets/css/starter-template.css"
+    "src/assets/less/openprocurement.bootstrap.less",
+    "src/assets/less/custom.less"
   ],
   "assets": "src/assets/base/**/*.*",
   "buildout_outDir": "../../parts",
