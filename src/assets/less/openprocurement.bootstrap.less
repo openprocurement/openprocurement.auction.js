@@ -66,9 +66,6 @@ body {
   position: fixed;
   width: 100%;
 }
-.tooltip{
-  z-index: 1020;
-}
 .btn {
   border-radius: 0;
 }
@@ -154,9 +151,11 @@ body {
 
 /* Timer */
 .timer-item {
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: bold;
   @media (min-width: @screen-sm-min) {
     font-size: 22px;
+    font-weight: normal;
   }
 }
 
@@ -171,6 +170,9 @@ body {
   @media (max-width: @screen-sm-max) {
     width: auto;
   }
+  p {
+    margin: 0;
+  }
 }
 .round-number{
   font-size: 23px;
@@ -179,9 +181,7 @@ body {
     font-weight: 700;
   }
 }
-.round-information p {
-  margin: 0;
-}
+
 
 /* Progress bar */
 .progress-fixed-top {
@@ -241,7 +241,6 @@ body {
 .stage-icon-visual {
   display: table-cell;
   height: 37px;
-  padding-top: 5px;
   vertical-align: middle;
   width: 37px;
   @media (min-width: @screen-sm-min) {
@@ -251,6 +250,7 @@ body {
 }
 .stage-icon-svg {
   height: 37px;
+  vertical-align: middle;
   width: 37px;
   @media (min-width: @screen-sm-min) {
     height: 47px;
