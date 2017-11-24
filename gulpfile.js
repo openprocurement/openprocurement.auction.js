@@ -35,6 +35,7 @@ gulp.task('js:vendor', () => {
   return gulp.src(config.js)
     .pipe(sourcemaps.init())
     .pipe(concat('vendor.js'))
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.buildDir + '/static/js'));
 });
@@ -43,6 +44,7 @@ gulp.task('js:tenders', () => {
   return gulp.src(config.modules.tenders.js)
     .pipe(sourcemaps.init())
     .pipe(concat('tenders.js'))
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.buildDir + '/static/js'));
 });
@@ -50,12 +52,14 @@ gulp.task('js:tenders', () => {
 gulp.task('js:index', () => {
   return gulp.src(config.modules.index.js)
     .pipe(concat('index.js'))
+    .pipe(uglify())
     .pipe(gulp.dest(config.buildDir + '/static/js'));
 });
 
 gulp.task('js:archive', () => {
   return gulp.src(config.modules.archive.js)
     .pipe(concat('archive.js'))
+    .pipe(uglify())
     .pipe(gulp.dest(config.buildDir + '/static/js'));
 });
 
