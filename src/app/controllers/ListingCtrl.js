@@ -3,7 +3,7 @@ angular.module('auction').controller('ListingController', [
   function(AuctionConfig, $scope, $http) {
     /*@ngInject;*/
 
-    $scope.db_url = (location.protocol + '//' + location.host + "/" + window.db_name) || "";
+    $scope.db_url = db_url || (location.protocol + '//' + location.host + "/" + window.db_name) || "";
     $http({
       method: 'GET',
       url: $scope.db_url + '/_design/auctions/_view/by_endDate',

@@ -15,7 +15,7 @@ angular.module('auction').controller('ArchiveController', [
   var params = getJsonFromUrl()
   $scope.offset = params.offset || (new Date()).getTime();
   $scope.startid = params.startid || '';
-  $scope.db_url = (location.protocol + '//' + location.host + "/" + window.db_name) || "";
+  $scope.db_url = db_url || (location.protocol + '//' + location.host + "/" + window.db_name) || "";
 
   $http({
     method: 'GET',
