@@ -896,7 +896,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
-body-parser@^1.12.4:
+body-parser@^1.16.1:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.2.tgz#87678a19d84b47d859b83199bd59bce222b10454"
   dependencies:
@@ -1680,7 +1680,7 @@ connect@3.5.0:
     parseurl "~1.3.1"
     utils-merge "1.0.0"
 
-connect@^3.3.5:
+connect@^3.6.0:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/connect/-/connect-3.6.5.tgz#fb8dde7ba0763877d0ec9df9dac0b4b40e72c7da"
   dependencies:
@@ -2142,9 +2142,9 @@ engine.io-client@1.8.0:
     xmlhttprequest-ssl "1.5.3"
     yeast "0.1.2"
 
-engine.io-client@~1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-1.8.4.tgz#9fe85dee25853ca6babe25bd2ad68710863e91c2"
+engine.io-client@1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-1.8.3.tgz#1798ed93451246453d4c6f635d7a201fe940d5ab"
   dependencies:
     component-emitter "1.2.1"
     component-inherit "0.0.3"
@@ -2192,16 +2192,16 @@ engine.io@1.8.0:
     engine.io-parser "1.3.1"
     ws "1.1.1"
 
-engine.io@~1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-1.8.4.tgz#77bce12b80e5d60429337fec3b0daf691ebc9003"
+engine.io@1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-1.8.3.tgz#8de7f97895d20d39b85f88eeee777b2bd42b13d4"
   dependencies:
     accepts "1.3.3"
     base64id "1.0.0"
     cookie "0.3.1"
     debug "2.3.3"
     engine.io-parser "1.3.2"
-    ws "1.1.4"
+    ws "1.1.2"
 
 ent@~2.2.0:
   version "2.2.0"
@@ -2916,7 +2916,7 @@ glob@^4.3.1:
     minimatch "^2.0.1"
     once "^1.3.0"
 
-glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.0:
+glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.0, glob@^7.1.1:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -4182,7 +4182,7 @@ karma-cli@~0.0.4:
   dependencies:
     resolve "~0.5.1"
 
-karma-coverage@~0.2.7:
+karma-coverage@^0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/karma-coverage/-/karma-coverage-0.2.7.tgz#f76740b275bbf30a0ab9f41d8cf56843a0994576"
   dependencies:
@@ -4203,35 +4203,37 @@ karma-requirejs@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/karma-requirejs/-/karma-requirejs-0.2.6.tgz#1a770c64f901320a389c65b4944746326372def8"
 
-karma@~1.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-1.0.0.tgz#77a95c4673d4440a19a9ec057b64ab1e0a5cfd51"
+karma@^1.0.0:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.1.tgz#85cc08e9e0a22d7ce9cca37c4a1be824f6a2b1ae"
   dependencies:
     bluebird "^3.3.0"
-    body-parser "^1.12.4"
+    body-parser "^1.16.1"
     chokidar "^1.4.1"
     colors "^1.1.0"
     combine-lists "^1.0.0"
-    connect "^3.3.5"
+    connect "^3.6.0"
     core-js "^2.2.0"
     di "^0.0.1"
     dom-serialize "^2.2.0"
     expand-braces "^0.1.1"
-    glob "^7.0.3"
+    glob "^7.1.1"
     graceful-fs "^4.1.2"
     http-proxy "^1.13.0"
     isbinaryfile "^3.0.0"
     lodash "^3.8.0"
     log4js "^0.6.31"
     mime "^1.3.4"
-    minimatch "^3.0.0"
+    minimatch "^3.0.2"
     optimist "^0.6.1"
     qjobs "^1.1.4"
-    rimraf "^2.3.3"
-    socket.io "^1.4.5"
+    range-parser "^1.2.0"
+    rimraf "^2.6.0"
+    safe-buffer "^5.0.1"
+    socket.io "1.7.3"
     source-map "^0.5.3"
-    tmp "0.0.28"
-    useragent "^2.1.9"
+    tmp "0.0.31"
+    useragent "^2.1.12"
 
 kind-of@^3.0.2:
   version "3.2.2"
@@ -5954,7 +5956,7 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-range-parser@~1.2.0:
+range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
@@ -6275,7 +6277,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.3.3, rimraf@^2.3.4, rimraf@^2.5.1, rimraf@^2.6.1:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.3.4, rimraf@^2.5.1, rimraf@^2.6.0, rimraf@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
@@ -6488,15 +6490,15 @@ socket.io-client@1.6.0:
     socket.io-parser "2.3.1"
     to-array "0.1.4"
 
-socket.io-client@1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-1.7.4.tgz#ec9f820356ed99ef6d357f0756d648717bdd4281"
+socket.io-client@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-1.7.3.tgz#b30e86aa10d5ef3546601c09cde4765e381da377"
   dependencies:
     backo2 "1.0.2"
     component-bind "1.0.0"
     component-emitter "1.2.1"
     debug "2.3.3"
-    engine.io-client "~1.8.4"
+    engine.io-client "1.8.3"
     has-binary "0.1.7"
     indexof "0.0.1"
     object-component "0.0.3"
@@ -6525,16 +6527,16 @@ socket.io@1.6.0:
     socket.io-client "1.6.0"
     socket.io-parser "2.3.1"
 
-socket.io@^1.4.5:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-1.7.4.tgz#2f7ecedc3391bf2d5c73e291fe233e6e34d4dd00"
+socket.io@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-1.7.3.tgz#b8af9caba00949e568e369f1327ea9be9ea2461b"
   dependencies:
     debug "2.3.3"
-    engine.io "~1.8.4"
+    engine.io "1.8.3"
     has-binary "0.1.7"
     object-assign "4.1.0"
     socket.io-adapter "0.5.0"
-    socket.io-client "1.7.4"
+    socket.io-client "1.7.3"
     socket.io-parser "2.3.1"
 
 sort-keys@^2.0.0:
@@ -6967,9 +6969,9 @@ tmp@0.0.23:
   version "0.0.23"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.23.tgz#de874aa5e974a85f0a32cdfdbd74663cb3bd9c74"
 
-tmp@0.0.28:
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.28.tgz#172735b7f614ea7af39664fa84cf0de4e515d120"
+tmp@0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.31.tgz#8f38ab9438e17315e5dbd8b3657e8bfb277ae4a7"
   dependencies:
     os-tmpdir "~1.0.1"
 
@@ -7210,7 +7212,7 @@ user-home@^1.0.0, user-home@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/user-home/-/user-home-1.1.1.tgz#2b5be23a32b63a7c9deb8d0f28d485724a3df190"
 
-useragent@^2.1.9:
+useragent@^2.1.12:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/useragent/-/useragent-2.2.1.tgz#cf593ef4f2d175875e8bb658ea92e18a4fd06d8e"
   dependencies:
@@ -7494,13 +7496,6 @@ ws@1.1.2:
     options ">=0.0.5"
     ultron "1.0.x"
 
-ws@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.4.tgz#57f40d036832e5f5055662a397c4de76ed66bf61"
-  dependencies:
-    options ">=0.0.5"
-    ultron "1.0.x"
-
 wtf-8@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wtf-8/-/wtf-8-1.0.0.tgz#392d8ba2d0f1c34d1ee2d630f15d0efb68e1048a"
@@ -7580,7 +7575,7 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-yarn@^1.1.0:
+yarn@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.3.2.tgz#5939762581b5b4ddcd3418c0f6be42df3aee195f"
 
