@@ -425,7 +425,8 @@ angular.module('auction').controller('AuctionController', [
         message: "Start post bid",
         bid_data: parseFloat(bid) || parseFloat($rootScope.form.bid) || 0
       });
-
+      $rootScope.bid_id_input = document.getElementById("bid-amount-input");
+      window.localStorage.setItem($rootScope.bid_id_input.id, $rootScope.bid_id_input.value);
       if (parseFloat($rootScope.form.bid) == -1) {
         msg_id = Math.random();
         $rootScope.alerts.push({
@@ -498,7 +499,6 @@ angular.module('auction').controller('AuctionController', [
             msg_id = Math.random();
             if (bid == -1) {
               $rootScope.alerts = [];
-              $rootScope.allow_bidding = true;
               $log.info({
                 message: "Handle cancel bid response on post bid"
               });
@@ -507,10 +507,11 @@ angular.module('auction').controller('AuctionController', [
                 type: 'success',
                 msg: 'Bid canceled'
               });
+              window.localStorage.clear();
+              $rootScope.allow_bidding = true;
               $rootScope.form.bid = "";
               $rootScope.form.full_price = '';
               $rootScope.form.bid_temp = '';
-
             } else {
               $log.info({
                 message: "Handle success response on post bid",
@@ -789,6 +790,25 @@ angular.module('auction').controller('AuctionController', [
       $rootScope.scroll_to_stage();
       $rootScope.show_bids_form();
       $rootScope.$apply();
+      if ($rootScope.auction_doc.current_stage !== -1){
+        if ($rootScope.auction_doc.stages[$rootScope.auction_doc.current_stage].type == 'pause'){
+          window.localStorage.clear();
+        } else {
+          window.addEventListener('load', $rootScope.load_post_bid(), true);
+        }
+      }
+    };
+    $rootScope.load_post_bid = function() {
+      var i = 0, key, element;
+      while (i < window.localStorage.length) {
+        key = window.localStorage.key(i++);
+        element = document.getElementById(key);
+        if (element) {
+          $rootScope.new_value = window.localStorage.getItem(key);
+          $rootScope.form.BidsForm.bid.$setViewValue($rootScope.new_value);
+          $rootScope.allow_bidding = false;
+        }
+      }
     };
     $rootScope.calculate_rounds = function (argument) {
       $rootScope.Rounds = [];
