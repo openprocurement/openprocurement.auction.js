@@ -6,6 +6,7 @@ const gulp = require('gulp'),
   cleanCSS = require('gulp-clean-css'),
   uglify = require('gulp-uglify'),
   fs = require('fs'),
+  eslint = require('gulp-eslint'),
   less = require('gulp-less'),
   lessAutoprefix = require('less-plugin-autoprefix'),
   sourcemaps = require('gulp-sourcemaps'),
@@ -61,6 +62,12 @@ gulp.task('js:archive', () => {
     .pipe(concat('archive.js'))
     .pipe(uglify())
     .pipe(gulp.dest(config.buildDir + '/static/js'));
+});
+
+gulp.task('js:lint', () => {
+  return gulp.src(config.modules.tenders.js)
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 gulp.task('css:all', () => {

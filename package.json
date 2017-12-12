@@ -29,7 +29,8 @@
   "scripts": {
     "develop": "npm install yarn --ignore-scripts && yarn --ignore-scripts",
     "build": "gulp",
-    "test": "karma start"
+    "js:lint": "gulp js:lint",
+    "js:test": "karma start"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
@@ -49,6 +50,7 @@
     "gulp-clean-css": "^3.9.0",
     "gulp-concat": "^2.6.1",
     "gulp-data": "^1.2.1",
+    "gulp-eslint": "^3.0.1",
     "gulp-file-include": "^1.1.0",
     "gulp-filter": "^5.0.0",
     "gulp-less": "3.3.2",

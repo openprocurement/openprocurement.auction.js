@@ -8,7 +8,6 @@
         "src/app/translations.js",
         "src/app/factories/*.js",
         "src/app/directives/*.js",
-        "src/app/controllers/OffCanvasCtl.js",
         "src/app/controllers/AuctionCtl.js"
       ]
     },
