@@ -408,7 +408,7 @@ angular.module('auction').controller('AuctionController', [
           }
           $rootScope.login_params = params;
           delete $rootScope.login_params.wait;
-          $rootScope.login_url = base_url + './login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
+          $rootScope.login_url = base_url + '/login?' + AuctionUtils.stringifyQueryString($rootScope.login_params);
         } else {
           $rootScope.follow_login_allowed = false;
         }
