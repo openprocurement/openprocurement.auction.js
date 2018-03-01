@@ -4,7 +4,7 @@
   <style type="text/css">[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none !important;}</style>
   <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link href="/static/css/all.css" rel="stylesheet" crossorigin="anonymous">
-  <title>Перелік аукціонів</title>
+  <title>Auctions listing</title>
 {% endblock %}
 {% block body %}
   <body>
@@ -16,20 +16,37 @@
     {% raw %}
       <div class="container" ng-cloak>
         <div class="list-group" >
+          <nav>
+            <ul class="pager">
+              <div ng-if="hasNext()">
+                <li class="next"><a href="?offset={{offset}}">Next page<span aria-hidden="true">&rarr;</span></a></li>
+              </div>
+              <li ng-if="hasPrev()" class="previous"><a href="/"><span aria-hidden="true">&larr;</span>First page</a></li>
+            </ul>
+          </nav>
           <div class="list-group-item text-center"
                ng-repeat="auction in auctions">
-            <a ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0" href="/insider-auctions/{{ auction.doc._id }}">
-              <h4 class="list-group-item-heading">
-                Аукціон {{ auction.doc.auctionID }}
-              </h4>
-            </a>
-            <a ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1" href="/auctions/{{ auction.doc._id }}">
-              <h4 class="list-group-item-heading">
-                Аукціон {{ auction.doc.auctionID }}
-              </h4>
-            </a>
+            <h4 ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0" class="list-group-item-heading">
+              <a href="/insider-auctions/{{ auction.doc._id }}">
+                Auction {{ auction.doc.auctionID }}
+              </a>
+            </h4>
+            <h4 ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1" class="list-group-item-heading">
+              <a href="/auctions/{{ auction.doc._id }}">
+                Auction {{ auction.doc.auctionID }}
+              </a>
+            </h4>
             <p class="list-group-item-text">
-              Час початку: {{ auction.doc.stages[0].start }}
+              Start Date: {{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}
+            </p>
+            <p class="list-group-item-text">
+              {{ auction.doc.title }}
+            </p>
+            <p class="list-group-item-text">
+              Procurement Method Type: {{ auction.doc.procurementMethodType }}
+            </p>
+            <p class="list-group-item-text">
+              Value: {{ auction.doc.value.amount }} {{ auction.doc.value.currency }}
             </p>
           </div>
         </div>
