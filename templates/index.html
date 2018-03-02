@@ -25,6 +25,7 @@
           </ul>
         </nav>
         <div class="panels-list">
+          <p ng-if="auctions.length === 0">Empty auctions list.</p>
           <div class="panel panel-auction panel-success"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
