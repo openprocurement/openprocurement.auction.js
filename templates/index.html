@@ -7,7 +7,7 @@
   <title>Auctions listing</title>
 {% endblock %}
 {% block body %}
-  <body>
+  <body class="page-auctions-listing">
     <noscript>
       For full functionality of this site it is necessary to enable JavaScript.
       Here are the http://www.enable-javascript.com
@@ -15,41 +15,66 @@
     </noscript>
     {% raw %}
       <div class="container" ng-cloak>
-        <div class="list-group" >
-          <nav>
-            <ul class="pager">
-              <div ng-if="hasNext()">
-                <li class="next"><a href="?offset={{offset}}">Next page<span aria-hidden="true">&rarr;</span></a></li>
-              </div>
-              <li ng-if="hasPrev()" class="previous"><a href="/"><span aria-hidden="true">&larr;</span>First page</a></li>
-            </ul>
-          </nav>
-          <div class="list-group-item text-center"
+        <div class="page-header">
+          <h1>Auctions listing</h1>
+        </div>
+        <nav>
+          <ul class="pager">
+            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-success">Next page<span aria-hidden="true">&rarr;</span></a></li>
+            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-success"><span aria-hidden="true">&larr;</span>First page</a></li>
+          </ul>
+        </nav>
+        <div class="panels-list">
+          <div class="panel panel-auction panel-success"
                ng-repeat="auction in auctions">
-            <h4 ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0" class="list-group-item-heading">
-              <a href="/insider-auctions/{{ auction.doc._id }}">
-                Auction {{ auction.doc.auctionID }}
-              </a>
-            </h4>
-            <h4 ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1" class="list-group-item-heading">
-              <a href="/auctions/{{ auction.doc._id }}">
-                Auction {{ auction.doc.auctionID }}
-              </a>
-            </h4>
-            <p class="list-group-item-text">
-              Start Date: {{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}
-            </p>
-            <p class="list-group-item-text">
-              {{ auction.doc.title }}
-            </p>
-            <p class="list-group-item-text">
-              Procurement Method Type: {{ auction.doc.procurementMethodType }}
-            </p>
-            <p class="list-group-item-text">
-              Value: {{ auction.doc.value.amount }} {{ auction.doc.value.currency }}
-            </p>
+            <div class="panel-heading">
+              <h3 class="panel-title"
+                  ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
+                <a href="/insider-auctions/{{ auction.doc._id }}">
+                  Auction <strong>{{ auction.doc.auctionID }}</strong>
+                </a>
+              </h3>
+              <h3 class="panel-title"
+                  ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
+                <a href="/auctions/{{ auction.doc._id }}">
+                  Auction <strong>{{ auction.doc.auctionID }}</strong>
+                </a>
+              </h3>
+              <small>Start Date: <strong>{{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong></small>
+            </div>
+            <div class="panel-body">
+              <h4>
+                {{ auction.doc.title }}
+              </h4>
+              <p class="list-group-item-text">
+                Procurement Method Type: <strong>{{ auction.doc.procurementMethodType }}</strong>
+              </p>
+              <p>
+                Value: <strong>{{ auction.doc.value.amount }} {{ auction.doc.value.currency }}</strong>
+              </p>
+              <p class="list-group-item-text text-right">
+                <a href="/insider-auctions/{{ auction.doc._id }}"
+                   type="button"
+                   class="btn btn-success"
+                   ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
+                  Auction view
+                </a>
+                <a href="/auctions/{{ auction.doc._id }}"
+                   type="button"
+                   class="btn btn-success"
+                   ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
+                  Auction view
+                </a>
+              </p>
+            </div>
           </div>
         </div>
+        <nav>
+          <ul class="pager">
+            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-success">Next page<span aria-hidden="true">&rarr;</span></a></li>
+            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-success"><span aria-hidden="true">&larr;</span>First page</a></li>
+          </ul>
+        </nav>
       </div>
     {% endraw %}
     <script type=text/javascript>
