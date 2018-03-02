@@ -22,7 +22,7 @@
       "js": [
         "src/app/auction.js",
         "src/app/config.js",
-        "src/app/factories/*.js",
+        "src/app/factories/Utils.js",
         "src/app/controllers/ListingCtrl.js"
       ]
     }
