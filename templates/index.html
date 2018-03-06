@@ -20,13 +20,13 @@
         </div>
         <nav>
           <ul class="pager">
-            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-success">Next page<span aria-hidden="true">&rarr;</span></a></li>
-            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-success"><span aria-hidden="true">&larr;</span>First page</a></li>
+            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-info">Next page<span aria-hidden="true">&rarr;</span></a></li>
+            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-info"><span aria-hidden="true">&larr;</span>First page</a></li>
           </ul>
         </nav>
         <div class="panels-list">
           <p ng-if="auctions.length === 0">Empty auctions list.</p>
-          <div class="panel panel-auction panel-success"
+          <div class="panel panel-auction panel-info"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
               <h3 class="panel-title"
@@ -56,13 +56,13 @@
               <p class="list-group-item-text text-right">
                 <a href="/insider-auctions/{{ auction.doc._id }}"
                    type="button"
-                   class="btn btn-success"
+                   class="btn btn-info"
                    ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
                   Auction view
                 </a>
                 <a href="/auctions/{{ auction.doc._id }}"
                    type="button"
-                   class="btn btn-success"
+                   class="btn btn-info"
                    ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
                   Auction view
                 </a>
@@ -72,8 +72,8 @@
         </div>
         <nav>
           <ul class="pager">
-            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-success">Next page<span aria-hidden="true">&rarr;</span></a></li>
-            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-success"><span aria-hidden="true">&larr;</span>First page</a></li>
+            <li ng-if="hasNext()" class="next"><a href="?offset={{offset}}" class="text-info">Next page<span aria-hidden="true">&rarr;</span></a></li>
+            <li ng-if="hasPrev()" class="previous"><a href="/" class="text-info"><span aria-hidden="true">&larr;</span>First page</a></li>
           </ul>
         </nav>
       </div>

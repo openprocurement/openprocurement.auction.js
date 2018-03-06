@@ -14,7 +14,7 @@
       instructions how to enable JavaScript in your web browser.
     </noscript>
     {% raw %}
-      <div class="container">
+      <div class="container" ng-cloak>
         <div class="page-header">
           <h1>Auctions archive</h1>
         </div>
@@ -25,7 +25,8 @@
           </ul>
         </nav>
         <div class="panels-list">
-          <div class="panel panel-auction panel-default"
+          <div class="panel panel-auction"
+               ng-class="{true: 'panel-default', false: 'panel-success'}[auction.doc.current_phase === 'announcement']"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
               <h3 class="panel-title"
@@ -40,7 +41,10 @@
                   Auction <strong>{{ auction.doc.auctionID }}</strong>
                 </a>
               </h3>
-              <small>Start Date: <strong>{{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong> - End Date: <strong>{{ auction.doc.endDate | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong></small>
+              <small>
+                Start Date: <strong>{{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong>
+                <span ng-if="auction.doc.current_phase === 'announcement'">- End Date: <strong>{{ auction.doc.endDate | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong></span>
+              </small>
             </div>
             <div class="panel-body">
               <h4>
@@ -55,13 +59,15 @@
               <p class="list-group-item-text text-right">
                 <a href="/insider-auctions/{{ auction.doc._id }}"
                    type="button"
-                   class="btn btn-default"
+                   class="btn"
+                   ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']"
                    ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
                   Auction view
                 </a>
                 <a href="/auctions/{{ auction.doc._id }}"
                    type="button"
-                   class="btn btn-default"
+                   class="btn"
+                   ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']"
                    ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
                   Auction view
                 </a>
