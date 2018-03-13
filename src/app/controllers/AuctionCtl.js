@@ -1,10 +1,10 @@
 angular.module('auction').controller('AuctionController', [
   '$rootScope', 'AuctionConfig', 'AuctionUtils',
   '$timeout', '$http', '$log', '$cookies', '$cookieStore', '$window',
-  '$rootScope', '$location', '$translate', '$filter', 'growl', 'growlMessages', '$aside', '$q',
-  function ($scope, AuctionConfig, AuctionUtils,
+  '$location', '$translate', '$filter', 'growl', 'growlMessages', '$aside', '$q',
+  function ($rootScope, AuctionConfig, AuctionUtils,
     $timeout, $http, $log, $cookies, $cookieStore, $window,
-    $rootScope, $location, $translate, $filter, growl, growlMessages, $aside, $q) {
+    $location, $translate, $filter, growl, growlMessages, $aside, $q) {
     var base_url = window.location.href.replace(window.location.search, '');
     var evtSrc = '';
     var response_timeout = '';
@@ -606,7 +606,7 @@ angular.module('auction').controller('AuctionController', [
           } else {
             diff = a.amount - b.amount;
           }
-          if (diff == 0) {
+          if (diff === 0) {
             return Date.parse(b.time || "") - Date.parse(a.time || "");
           }
           return diff;
