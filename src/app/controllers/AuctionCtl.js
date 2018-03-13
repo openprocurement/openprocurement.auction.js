@@ -425,7 +425,7 @@ angular.module('auction').controller('AuctionController', [
         message: "Start post bid",
         bid_data: parseFloat(bid) || parseFloat($rootScope.form.bid) || 0
       });
-      $rootScope.bid_id_input = document.getElementById("bid-amount-input");
+      $rootScope.bid_id_input = document.getElementById('bid-amount-input_' + $rootScope.bidder_id);
       window.localStorage.setItem($rootScope.bid_id_input.id, $rootScope.bid_id_input.value);
       if (parseFloat($rootScope.form.bid) == -1) {
         msg_id = Math.random();
@@ -507,7 +507,9 @@ angular.module('auction').controller('AuctionController', [
                 type: 'success',
                 msg: 'Bid canceled'
               });
-              window.localStorage.clear();
+              if (window.localStorage.getItem('bid-amount-input_' + $rootScope.bidder_id) !== null) {
+                window.localStorage.removeItem('bid-amount-input_' + $rootScope.bidder_id);
+              }
               $rootScope.allow_bidding = true;
               $rootScope.form.bid = "";
               $rootScope.form.full_price = '';
@@ -791,8 +793,8 @@ angular.module('auction').controller('AuctionController', [
       $rootScope.show_bids_form();
       $rootScope.$apply();
       if ($rootScope.auction_doc.current_stage !== -1){
-        if ($rootScope.auction_doc.stages[$rootScope.auction_doc.current_stage].type == 'pause'){
-          window.localStorage.clear();
+        if (($rootScope.auction_doc.stages[$rootScope.auction_doc.current_stage].type == 'pause') && (window.localStorage.getItem('bid-amount-input_' + $rootScope.bidder_id) !== null)) {
+          window.localStorage.removeItem('bid-amount-input_' + $rootScope.bidder_id);
         } else {
           window.addEventListener('load', $rootScope.load_post_bid(), true);
         }
