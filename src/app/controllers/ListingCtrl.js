@@ -4,7 +4,7 @@ angular.module('auction').controller('ListingController', [
     /*@ngInject;*/
 
     $scope.auctions = [];
-    $scope.offset = AuctionUtils.parseQueryString(location.search.substr(1)).offset
+    $scope.offset = AuctionUtils.parseQueryString(location.search.substr(1)).offset;
     var offset = $scope.offset || 0;
     var rows_per_page = 10;
     var page = (offset / rows_per_page) + 1;
@@ -18,7 +18,7 @@ angular.module('auction').controller('ListingController', [
         skip: skip,
         limit: rows_per_page,
         include_docs: true,
-        startkey: offset
+        startkey: (new Date()).getTime()
       },
     }).then(function(resp) {
       $scope.auctions = resp.data.rows;
@@ -29,6 +29,6 @@ angular.module('auction').controller('ListingController', [
     $scope.hasNext = function() {
       var last_page = Math.floor($scope.total_rows / rows_per_page) + ($scope.total_rows % rows_per_page);
       return page != last_page && $scope.auctions.length > 0;
-    }
+    };
   }
 ]);
