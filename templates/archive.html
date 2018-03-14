@@ -26,7 +26,7 @@
         </nav>
         <div class="panels-list">
           <div class="panel panel-auction"
-               ng-class="{true: 'panel-default', false: 'panel-success'}[auction.doc.current_phase === 'announcement']"
+               ng-class="{true: 'panel-default', false: 'panel-success'}[auction.doc.current_phase === 'announcement' || auction.doc.auction_type ==='default' && auction.doc.current_stage === 9]"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
               <h3 class="panel-title"
@@ -43,7 +43,7 @@
               </h3>
               <small>
                 Start Date: <strong>{{ auction.doc.stages[0].start | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong>
-                <span ng-if="auction.doc.current_phase === 'announcement'">- End Date: <strong>{{ auction.doc.endDate | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong></span>
+                <span ng-if="auction.doc.endDate">- End Date: <strong>{{ auction.doc.endDate | date:"MM/dd/yyyy 'at' HH:mm:ss" }}</strong></span>
               </small>
             </div>
             <div class="panel-body">
