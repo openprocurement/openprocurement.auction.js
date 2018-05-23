@@ -425,8 +425,6 @@ angular.module('auction').controller('AuctionController', [
         message: "Start post bid",
         bid_data: parseFloat(bid) || parseFloat($rootScope.form.bid) || 0
       });
-      $rootScope.bid_id_input = document.getElementById('bid-amount-input_' + $rootScope.bidder_id);
-      window.localStorage.setItem($rootScope.bid_id_input.id, $rootScope.bid_id_input.value);
       if (parseFloat($rootScope.form.bid) == -1) {
         msg_id = Math.random();
         $rootScope.alerts.push({
@@ -525,6 +523,8 @@ angular.module('auction').controller('AuctionController', [
                 msg: 'Bid placed'
               });
               $rootScope.allow_bidding = false;
+              $rootScope.bid_id_input = document.getElementById('bid-amount-input_' + $rootScope.bidder_id);
+              window.localStorage.setItem($rootScope.bid_id_input.id, $rootScope.bid_id_input.value);
             }
             $rootScope.auto_close_alert(msg_id);
           }
