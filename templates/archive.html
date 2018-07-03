@@ -30,13 +30,13 @@
                ng-repeat="auction in auctions">
             <div class="panel-heading">
               <h3 class="panel-title"
-                  ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
+                  ng-show="(auction.doc.auction_type || 'default').indexOf('dutch') >= 0">
                 <a href="/insider-auctions/{{ auction.doc._id }}">
                   Auction <strong>{{ auction.doc.auctionID }}</strong>
                 </a>
               </h3>
               <h3 class="panel-title"
-                  ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
+                  ng-show="(auction.doc.auction_type || 'default').indexOf('dutch') === -1">
                 <a href="/auctions/{{ auction.doc._id }}">
                   Auction <strong>{{ auction.doc.auctionID }}</strong>
                 </a>
@@ -61,14 +61,14 @@
                    type="button"
                    class="btn"
                    ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']"
-                   ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') >= 0">
+                   ng-show="(auction.doc.auction_type || 'default').indexOf('dutch') >= 0">
                   Auction view
                 </a>
                 <a href="/auctions/{{ auction.doc._id }}"
                    type="button"
                    class="btn"
                    ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']"
-                   ng-show="(auction.doc.procurementMethodType || 'default').indexOf('dgfInsider') === -1">
+                   ng-show="(auction.doc.auction_type || 'default').indexOf('dutch') === -1">
                   Auction view
                 </a>
               </p>
