@@ -21,6 +21,20 @@ angular.module('auction').controller('ListingController', [
         startkey: (new Date()).getTime()
       },
     }).then(function(resp) {
+      var auctionQueryListing = '';
+      $scope.auctions.map(function(item){
+        var auctionType = item.doc.auction_type || 'default';
+        if (auctionType === 'texas'){
+          auctionQueryListing = 'texas-auctions';
+        }
+        else if (auctionType === 'dutch'){
+          auctionQueryListing = 'insider-auctions';
+        }
+        else if (auctionType === 'simple' || auctionType === 'multilot' || auctionType === 'meat' || auctionType === 'meat' || auctionType === 'default'){
+          auctionQueryListing = 'auctions';
+        }
+        $scope.auctionQueryListing = auctionQueryListing;
+      });
       $scope.auctions = resp.data.rows;
       $scope.total_rows = resp.data.total_rows;
       $scope.offset = resp.data.offset;
@@ -32,3 +46,4 @@ angular.module('auction').controller('ListingController', [
     };
   }
 ]);
+

@@ -29,21 +29,8 @@
           <div class="panel panel-auction panel-info"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
-              <h3 class="panel-title"
-                  ng-show="((auction.doc.auction_type || 'default').indexOf('dutch') >= 0) && (auction.doc.procurementMethodType !== 'texas')">
-                <a href="/insider-auctions/{{ auction.doc._id }}">
-                  Auction <strong>{{ auction.doc.auctionID }}</strong>
-                </a>
-              </h3>
-              <h3 class="panel-title"
-                  ng-show="(auction.doc.procurementMethodType) === 'texas'">
-                <a href="/texas-auctions/{{ auction.doc._id }}">
-                  Auction <strong>{{ auction.doc.auctionID }}</strong>
-                </a>
-              </h3>
-              <h3 class="panel-title"
-                  ng-show="((auction.doc.auction_type || 'default').indexOf('dutch') === -1) && (auction.doc.procurementMethodType !== 'texas')">
-                <a href="/auctions/{{ auction.doc._id }}">
+              <h3 class="panel-title">
+                <a href="/{{auctionQueryListing}}/{{ auction.doc._id }}">
                   Auction <strong>{{ auction.doc.auctionID }}</strong>
                 </a>
               </h3>
@@ -60,25 +47,10 @@
                 Value: <strong>{{ auction.doc.value.amount }} {{ auction.doc.value.currency }}</strong>
               </p>
               <p class="list-group-item-text text-right">
-                <a href="/insider-auctions/{{ auction.doc._id }}"
+                <a href="/{{auctionQueryListing}}/{{ auction.doc._id }}"
                    type="button"
-                   class="btn btn-info"
-                   ng-show="((auction.doc.auction_type || 'default').indexOf('dutch') >= 0) && (auction.doc.procurementMethodType !== 'texas')">
+                   class="btn btn-info">
                   Auction view
-                </a>
-                <a href="/auctions/{{ auction.doc._id }}"
-                   type="button"
-                   class="btn btn-info"
-                   ng-show="((auction.doc.auction_type || 'default').indexOf('dutch') === -1) && (auction.doc.procurementMethodType !== 'texas')">
-                  Auction view
-                </a>
-                <a href="/texas-auctions/{{ auction.doc._id }}"
-                   type="button"
-                   class="btn"
-                   ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']"
-                   ng-show="auction.doc.procurementMethodType === 'texas'">
-                  Auction view
-                </a>
               </p>
             </div>
           </div>
