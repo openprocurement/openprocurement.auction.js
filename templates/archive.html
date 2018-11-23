@@ -29,9 +29,8 @@
                ng-class="{true: 'panel-default', false: 'panel-success'}[auction.doc.current_phase === 'announcement' || auction.doc.auction_type ==='default' && auction.doc.current_stage === 9]"
                ng-repeat="auction in auctions">
             <div class="panel-heading">
-              <h3 class="panel-title"
-                  >
-                <a href="/{{auctionQueryArchive}}/{{ auction.doc._id }}">
+              <h3 class="panel-title">
+                <a href="/{{parseArchive(auction.doc.auction_type)}}/{{auction.doc._id}}">
                   Auction <strong>{{ auction.doc.auctionID }}</strong>
                 </a>
               </h3>
@@ -48,10 +47,11 @@
                 Procurement Method Type: <strong>{{ auction.doc.procurementMethodType }}</strong>
               </p>
               <p>
-                Value: <strong>{{ auction.doc.value.amount }} {{ auction.doc.value.currency }}</strong>
+                Value: <strong>{{ auction.doc.value.amount }} {{ auction.doc.value.currency }}
+                </strong>
               </p>
               <p class="list-group-item-text text-right">
-                <a href="/{{auctionQueryArchive}}/{{ auction.doc._id }}"
+                <a href="/{{parseArchive(auction.doc.auction_type)}}/{{auction.doc._id}}"
                    type="button"
                    class="btn"
                    ng-class="{true: 'btn-default', false: 'btn-success'}[auction.doc.current_phase === 'announcement']">
