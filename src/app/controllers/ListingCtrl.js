@@ -21,20 +21,18 @@ angular.module('auction').controller('ListingController', [
         startkey: (new Date()).getTime()
       },
     }).then(function(resp) {
-      var auctionQueryListing = '';
-      $scope.auctions.map(function(item){
-        var auctionType = item.doc.auction_type || 'default';
-        if (auctionType === 'texas'){
-          auctionQueryListing = 'texas-auctions';
+      $scope.parseListing = function(type) {
+        var auctionTypeOnListing = type || 'default';
+        if(auctionTypeOnListing === 'texas'){
+          return 'texas-auctions';
         }
-        else if (auctionType === 'dutch'){
-          auctionQueryListing = 'insider-auctions';
+        else if (auctionTypeOnListing === 'dutch'){
+          return 'insider-auctions';
         }
-        else if (auctionType === 'simple' || auctionType === 'multilot' || auctionType === 'meat' || auctionType === 'meat' || auctionType === 'default'){
-          auctionQueryListing = 'auctions';
+        else if (auctionTypeOnListing === 'simple' || auctionTypeOnListing === 'multilot' || auctionTypeOnListing === 'meat' || auctionTypeOnListing === 'default'){
+          return 'auctions';
         }
-        $scope.auctionQueryListing = auctionQueryListing;
-      });
+      };
       $scope.auctions = resp.data.rows;
       $scope.total_rows = resp.data.total_rows;
       $scope.offset = resp.data.offset;

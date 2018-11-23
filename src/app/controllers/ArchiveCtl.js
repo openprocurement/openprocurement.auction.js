@@ -30,20 +30,18 @@ angular.module('auction').controller('ArchiveController', [
     },
   }).then(function(resp) {
     $scope.auctions = resp.data.rows;
-    var auctionQueryArchive = '';
-    $scope.auctions.map(function(item){
-      var auctionType = item.doc.auction_type || 'default';
-      if (auctionType === 'texas'){
-        auctionQueryArchive = 'texas-auctions';
+    $scope.parseArchive = function(type) {
+      var auctionType = type || 'default';
+      if(auctionType === 'texas'){
+        return 'texas-auctions';
       }
       else if (auctionType === 'dutch'){
-        auctionQueryArchive = 'insider-auctions';
+        return 'insider-auctions';
       }
-      else if (auctionType === 'simple' || auctionType === 'multilot' || auctionType === 'meat' || auctionType === 'meat' || auctionType === 'default'){
-        auctionQueryArchive = 'auctions';
+      else if (auctionType === 'simple' || auctionType === 'multilot' || auctionType === 'meat' || auctionType === 'default'){
+        return 'auctions';
       }
-      $scope.auctionQueryArchive = auctionQueryArchive;
-    });
+    };
       $scope.offset = false;
       if (($scope.auctions || []).length > 100) {
         $scope.offset = $scope.auctions[100].key;
