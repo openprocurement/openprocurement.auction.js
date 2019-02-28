@@ -58,9 +58,9 @@ angular.module('auction').controller('AuctionController', [
     $rootScope.start = function () {
       $log.info({
         message: "Setup connection to remote_db",
-        auctions_loggedin: $cookies.auctions_loggedin || AuctionUtils.detectIE()
+        auctions_loggedin: $cookies.get('auctions_loggedin') || AuctionUtils.detectIE()
       });
-      if ($cookies.auctions_loggedin || AuctionUtils.detectIE()) {
+      if ($cookies.get('auctions_loggedin') || AuctionUtils.detectIE()) {
         AuctionConfig.remote_db = AuctionConfig.remote_db + "_secured";
       }
       $rootScope.changes_options = {
