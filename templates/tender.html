@@ -279,9 +279,12 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label for="bid"><span translate>Your proposal</span>:</label>
                                 <span ng-init="max_bid_amount()" class="max_bid_amount" id="max_bid_amount" ng-if="(auction_doc.auction_type||'default') == 'default'"><span id="max_bid_amount_price">{{ calculated_max_bid_amount|fraction }}</span> {{'or higher'|translate}}</span>
+                                <div ng-show="overloadPrice">
+                                    <span translate>overprice</span>
+                                </div>
                             </div>
                             <div class="col-md-8 col-sm-8 col-xs-12">
-                              <input id="{{'bid-amount-input_' + bidder_id }}" ng-disabled="!allow_bidding" min="0" ng-focus="$root.form.bid_temp = $root.form.bid" ng-blur="set_bid_from_temp()" ng-change="calculate_bid_temp()" class="form-control" id="bid" name="bid" ng-model="$root.form.bid" required format>
+                              <input id="{{'bid-amount-input_' + bidder_id }}" ng-disabled="!allow_bidding" min="0" ng-change="calculate_bid_temp()" class="form-control" id="bid" name="bid" ng-model="$root.form.bid" required format>
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12 text-right">
                                 <button id="place-bid-button" type="submit" ng-if="allow_bidding" ng-click="post_bid()" class="btn btn-success" ng-class="{'active': form.active}" translate>Place a bid</button>
