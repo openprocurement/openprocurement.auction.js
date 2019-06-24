@@ -91,7 +91,8 @@ angular.module('auction')
       'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.',
       'Please use the correct link to view the auction.': 'Please use the correct link to view the auction.',
       'Auction has not started and will be rescheduled': 'Auction has not started and will be rescheduled',
-      'Please wait for the auction start.': 'Please wait for the auction start.'
+      'Please wait for the auction start.': 'Please wait for the auction start.',
+      'List of IP addresses of registered participants': 'List of IP addresses of registered participants'
     });
 
     $translateProvider.translations('uk', {
@@ -183,7 +184,8 @@ angular.module('auction')
       'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Не вдається зробити ставку. Перевірте, що в переглядачі відкрито не більше 2-ох аукціонів.',
       'Please use the correct link to view the auction.': 'Будь ласка, використовуйте правильне посилання для перегляду аукціону.',
       'Auction has not started and will be rescheduled': 'Аукціон не розпочався і буде перепланований',
-      'Please wait for the auction start.': 'Будь ласка, дочекайтесь початку аукціону.'
+      'Please wait for the auction start.': 'Будь ласка, дочекайтесь початку аукціону.',
+      'List of IP addresses of registered participants': 'Список IP-адрес зареєстрованих учасників',
     });
 
 
@@ -275,6 +277,7 @@ angular.module('auction')
       'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Невозможно сделать ставку. Проверьте, что в браузере открыто не более 2-х аукционов.',
       'Please use the correct link to view the auction.': 'Пожалуйста, используйте правильную ссылку для просмотра аукциона.',
       'Auction has not started and will be rescheduled': 'Аукцион не начался и будет перепланирован',
-      'Please wait for the auction start.': 'Пожалуйста, дождитесь начала аукциона.'
+      'Please wait for the auction start.': 'Пожалуйста, дождитесь начала аукциона.',
+      'List of IP addresses of registered participants': 'Список IP-адресов зарегистрированных участников',
     });
   }]);
