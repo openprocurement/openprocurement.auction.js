@@ -324,6 +324,7 @@
               </li>
 
               <li ng-if="clients" class="list-group-item">
+                  <p translate>List of IP addresses of registered participants</p>
                 <p ng-repeat="(id, client) in clients">
                     <span ng-switch on="id == client_id">
                         <span ng-switch-when="false" translate>Client</span>
