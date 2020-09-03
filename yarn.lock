@@ -7027,8 +7027,8 @@ type-is@~1.6.15:
     mime-types "~2.1.15"
 
 typed-function@^0.10.1:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-0.10.5.tgz#2e0f18abd065219fab694a446a65c6d1981832c0"
+  version "0.10.7"
+  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-0.10.7.tgz#f702af7d77a64b61abf86799ff2d74266ebc4477"
 
 typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
