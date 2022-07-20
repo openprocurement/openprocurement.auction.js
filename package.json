@@ -8,7 +8,7 @@
   "main": "karma.conf.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "angular": "1.6.5",
+    "angular": "1.8.3",
     "angular-cookies": "1.5.8",
     "angular-ellipses": "https://github.com/genu/angular-ellipses/archive/0.1.3.tar.gz",
     "angular-growl-v2": "https://github.com/JanStevens/angular-growl-2/archive/0.7.2.tar.gz",
