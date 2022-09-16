@@ -19,7 +19,7 @@
     "angular-translate-storage-cookie": "2.15.2",
     "angular-translate-storage-local": "2.15.2",
     "angular-ui-bootstrap": "2.5.0",
-    "bootstrap": "~3.2.0",
+    "bootstrap": "~3.4.1",
     "event-source-polyfill": "https://github.com/Yaffle/EventSource/archive/0.0.3.tar.gz",
     "mathjs": "2.3.0",
     "moment-timezone": "0.2.5",
